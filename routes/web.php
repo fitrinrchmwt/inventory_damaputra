@@ -22,8 +22,9 @@ Route::get('/kelolabahankeluar', [KelolaBahanController::class, 'bahan_keluar'])
 Route::get('/produk', [ProdukController::class, 'list_produk']);
 Route::get('/bahanbaku', [BahanBakuController::class, 'list_bahan']);
 
-Route::post('/tambahproduk',[ProdukController::class, 'tambah_produk']);
-Route::patch('/updateproduk', [ProdukController::class, 'update_produk']);
+Route::post('/produk/create',[ProdukController::class, 'tambah_produk']);
+Route::get('/updateproduk/{id_produk}', [ProdukController::class, 'edit']);
+Route::post('/produk/update', [ProdukController::class, 'update_produk']);
 Route::delete('/hapusproduk', [ProdukController::class, 'hapus_produk']);
 
 
@@ -36,4 +37,7 @@ Route::get('/user', [UserController::class, 'kelola_user']);
 Route::get('/laporanproduk', [LaporanProdukController::class, 'index']);
 Route::get('/laporanbahan', [LaporanBahanController::class, 'index']);
 
+//Route::get('/produk/create', [ProdukController::class, 'create']);
 
+//Route::get('/produk/form/{id_produk}', [ProdukController::class, 'edit']);
+//Route::post('/produk/update', [ProdukController::class, 'update_produk']);

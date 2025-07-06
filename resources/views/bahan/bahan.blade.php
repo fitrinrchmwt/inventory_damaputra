@@ -20,27 +20,27 @@
 
             <div class="card-body">
                 <!-- Data Table -->
-                <div class="table-responsive">
-                    <!-- Tambah Pencatatan -->
-                    <div class="row">
-                        <div class="col-sm-12 col-md-6">
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-damava shadow-sm"
-                                style="padding: 10px; margin-bottom: 10px;" data-bs-toggle="modal"
-                                data-bs-target="#BahanModal">
-                                <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Data
-                            </a>
-                        </div>
+
+                <!-- Tambah Pencatatan -->
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-damava shadow-sm"
+                            style="padding: 10px; margin-bottom: 10px;" data-bs-toggle="modal" data-bs-target="#BahanModal">
+                            <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Data
+                        </a>
                     </div>
-                    <!-- Modal -->
-                    <!-- Include modal dari file terpisah -->
-                    @include('bahan.form')
+                </div>
+                <!-- Modal -->
+                <!-- Include modal dari file terpisah -->
+                @include('bahan.form')
 
-                    <!-- End Modal -->
+                <!-- End Modal -->
 
 
 
 
-                    <!-- Table -->
+                <!-- Table -->
+                <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                             <tr>

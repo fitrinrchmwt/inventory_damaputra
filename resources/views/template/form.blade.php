@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('asset/datatables/dataTables.bootstrap4.min.css') }}" type="text/css">
     <style>
         .btn-damava {
-            background-color: #8e3f6d; /* atau sesuaikan dari warna sidebar kamu */
+            background-color: #5B2A3D; /* atau sesuaikan dari warna sidebar kamu */
             color: white;
             border: none;
         }

@@ -1,30 +1,29 @@
-
 <div class="modal fade" id="editProdukModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edit</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Tutup" >
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Tutup">
                     <span aria-hidden="true"><i class="fas fa-times"></i></span>
                 </button>
             </div>
             <div class="modal-body">
                 <!-- Form detail -->
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="produk/update" method="POST" enctype="multipart/form-data">
                     @csrf
                     <table>
                         <tr>
                             <td>ID Produk</td>
                             <td>:</td>
                             <td>
-                                <input type="text" name="id_produk"  value="">
+                                <input type="text" name="id_produk" id="id_produk" value="{{ $data->id_produk }}" required>
                             </td>
                         </tr>
                         <tr>
                             <td>Nama Produk</td>
                             <td>:</td>
                             <td>
-                                <input type="text" name="nama_produk"  value="">
+                                <input type="text" name="nama_produk" value="">
                             </td>
                         </tr>
                         <tr>
@@ -42,7 +41,7 @@
                             <td>Stok Produk</td>
                             <td>:</td>
                             <td>
-                                <input type="number" name="stok_produk"  value="0">
+                                <input type="number" name="stok_produk" value="0">
                             </td>
                         </tr>
                     </table>
@@ -54,4 +53,4 @@
             </div>
         </div>
     </div>
-</div>  
+</div>
