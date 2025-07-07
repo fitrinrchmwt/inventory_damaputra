@@ -1,67 +1,52 @@
-<div class="modal fade" id="detailProdukModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="detailProdukModal{{ $produk->id_produk }}" tabindex="-1"
+    aria-labelledby="detailProdukLabel{{ $produk->id_produk }}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
+
             <div class="modal-header">
-                <h5 class="modal-title">Detail</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Tutup" >
+                <h5 class="modal-title" id="detailProdukLabel{{ $produk->id_produk }}">Detail Produk</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Tutup">
                     <span aria-hidden="true"><i class="fas fa-times"></i></span>
                 </button>
             </div>
+
             <div class="modal-body">
-                <!-- Form detail -->
-                <form action="" method="POST" enctype="multipart/form-data">
-                    <table class="table table-bordered" id="" width="100%" cellspacing="0">
-                        <tr>
-                            <td>No.</td>
-                            <td>:</td>
-                            <td>1</td>
-                        </tr>
-                        
-                        <tr>
-                            <td>ID Produk</td>
-                            <td>:</td>
-                            <td>PR-001</td>
-                        </tr>
-                        <tr>
-                            <td>Nama Produk</td>
-                            <td>:</td>
-                            <td>Abon Ayam</td>
-                        </tr>
-                        <tr>
-                            <td>Satuan</td>
-                            <td>:</td>
-                            <td>Pcs</td>
-                        </tr>
-                        <tr>
-                            <td>Stok Produk</td>
-                            <td>:</td>
-                            <td>0</td>
-                        </tr>
-                        <tr>
-                            <td>Created At</td>
-                            <td>:</td>
-                            <td>16/06/2025</td>
-                        </tr>
-                        <tr>
-                            <td>Update At</td>
-                            <td>:</td>
-                            <td>16/06/2025</td>
-                        </tr>
-                        <tr>
-                            <td>ID User</td>
-                            <td>:</td>
-                            <td>ADM-001</td>
-                        </tr>
-                        <tr>
-                            <td>Kadaluarsa</td>
-                            <td>:</td>
-                            <td>16/01/2026</td>
-                        </tr>
-                    </table>
-                </form>
+                <table class="table table-bordered">
+                    <tr>
+                        <td>ID Produk</td>
+                        <td>{{ $produk->id_produk }}</td>
+                    </tr>
+                    <tr>
+                        <td>Nama Produk</td>
+                        <td>{{ $produk->nama_produk }}</td>
+                    </tr>
+                    <tr>
+                        <td>Satuan</td>
+                        <td>{{ ucfirst($produk->satuan) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Stok Produk</td>
+                        <td>{{ $produk->stok_produk }}</td>
+                    </tr>
+                    <tr>
+                        <td>Created At</td>
+                        <td>{{ $produk->created_at ? $produk->created_at->format('d/m/Y') : '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Updated At</td>
+                        <td>{{ $produk->updated_at ? $produk->updated_at->format('d/m/Y') : '-' }}</td>
+                    </tr>
+                    <tr>
+                        <td>ID User</td>
+                        <td>{{ $produk->id_user ?? '-' }}</td>
+                    </tr>
+                </table>
             </div>
+
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            </div>
+
         </div>
     </div>
-</div>  
+</div> -->

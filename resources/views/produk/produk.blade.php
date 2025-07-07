@@ -64,23 +64,92 @@
                                     <td width="35%">
                                         <!-- Tombol Detail -->
                                         <a href="#" class="d-none d-sm-inline-block btn btn-info shadow-sm"
-                                            data-bs-toggle="modal" data-bs-target="#detailProdukModal">
-                                            <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail
-                                        </a> |
+                                            data-bs-toggle="modal" data-bs-target="#detailProdukModal{{ $produk->id_produk }}"">
+                                                                            <i class=" fas fa-file-alt fa-sm
+                                            text-white-50"></i>
+                                            Detail</a> |
 
                                         <!-- Tombol Edit -->
-                                        <a href="updateproduk/{{ $produk->id_produk }}"
-                                            class="d-none d-sm-inline-block btn btn-warning shadow-sm edit-product-btn"
+                                        <a href="#" class="d-none d-sm-inline-block btn btn-warning shadow-sm edit-product-btn"
                                             data-bs-toggle="modal" data-bs-target="#editProdukModal"
-                                            id_produk="{{ $produk->id_produk }}" nama_produk="{{ $produk->nama_produk }}"
-                                            data-satuan="{{ $produk->satuan }}" stok_produk="{{ $produk->stok_produk }}">
-                                            <i class="fas fa-edit fa-sm text-white-50"></i> Edit </a> |
+                                            data-id_produk="{{ $produk->id_produk }}"
+                                            data-nama_produk="{{ $produk->nama_produk }}" data-satuan="{{ $produk->satuan }}"
+                                            data-stok_produk="{{ $produk->stok_produk }}">
+                                            <i class="fas fa-edit fa-sm text-white-50"></i> Edit
+                                        </a>
+                                        |
 
                                         <!-- Tombol Hapus -->
-                                        <a href="javascript:void(0);" onclick="hapusData('{{ $produk->id_produk }}')"
-                                            class="d-none d-sm-inline-block btn btn-danger shadow-sm">
-                                            <i class="fas fa-trash-alt fa-sm text-white-50"></i> Hapus
-                                        </a>
+                                        <form action="{{ route('produk.delete', $produk->id_produk) }}" method="POST"
+                                            style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="d-none d-sm-inline-block btn btn-danger shadow-sm edit-product-btn"
+                                                data-bs-toggle="modal" data-bs-target="#hapusProdukModal"
+                                                onclick="return confirm('Yakin ingin menghapus produk ini?')">
+                                                <i class="fas fa-trash-alt fa-sm text-white-50"></i> Hapus</button>
+                                        </form>
+
+                                        <!-- Modal Detail -->
+                                        <div class="modal fade" id="detailProdukModal{{ $produk->id_produk }}" tabindex="-1"
+                                            aria-labelledby="modalLabel{{ $produk->id_produk }}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalLabel{{ $produk->id_produk }}">Detail
+                                                            Produk</h5>
+                                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                                            aria-label="Tutup">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <td>ID Produk</td>
+                                                                <td>{{ $produk->id_produk }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Nama Produk</td>
+                                                                <td>{{ $produk->nama_produk }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Satuan</td>
+                                                                <td>{{ ucfirst($produk->satuan) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Stok Produk</td>
+                                                                <td>{{ $produk->stok_produk }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Created At</td>
+                                                                <td>{{ $produk->created_at ? $produk->created_at->format('d/m/Y') : '-' }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Updated At</td>
+                                                                <td>{{ $produk->updated_at ? $produk->updated_at->format('d/m/Y') : '-' }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>ID User</td>
+                                                                <td>{{ $produk->id_user ?? '-' }}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Tutup</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal Detail End -->
+
+
+
+
                                     </td>
 
                                 </tr>
@@ -95,18 +164,41 @@
                         </tbody>
                     </table>
 
-                    @if ($data){
-                        @include('produk.formEditProduk')
-                        @include('produk.detailProduk')
-                        }
+                    <div id="alert-notifikasi" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+                        <span id="alert-message"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                    </div>
 
-                    @endif
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const buttons = document.querySelectorAll('.edit-product-btn');
+
+                            buttons.forEach(button => {
+                                button.addEventListener('click', function () {
+                                    document.getElementById('edit_id_produk').value = this.dataset.id_produk;
+                                    document.getElementById('edit_nama_produk').value = this.dataset.nama_produk;
+                                    document.getElementById('edit_satuan').value = this.dataset.satuan;
+                                    document.getElementById('edit_stok_produk').value = this.dataset.stok_produk;
+                                });
+                            });
+                        });
+                    </script>
+
+                    
+
+
+                    @include('produk.formEditProduk')
+                    @include('produk.detailProduk')
+
+
+
                     <!-- Modal Edit Start -->
 
                     <!-- Modal Edit End -->
 
                     <!-- Modal Detail Start -->
-                    
+
 
                     <!-- Modal Detail End -->
 

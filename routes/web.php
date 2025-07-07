@@ -23,14 +23,16 @@ Route::get('/produk', [ProdukController::class, 'list_produk']);
 Route::get('/bahanbaku', [BahanBakuController::class, 'list_bahan']);
 
 Route::post('/produk/create',[ProdukController::class, 'tambah_produk']);
-Route::get('/updateproduk/{id_produk}', [ProdukController::class, 'edit']);
+//Route::get('/updateproduk/{id_produk}', [ProdukController::class, 'edit']);
 Route::post('/produk/update', [ProdukController::class, 'update_produk']);
-Route::delete('/hapusproduk', [ProdukController::class, 'hapus_produk']);
+Route::delete('/hapusproduk/{id_produk}', [ProdukController::class, 'hapus_produk'])->name('produk.delete');
+
 
 
 Route::post('/bahan/create',[BahanBakuController::class, 'tambah_bahan']);
-Route::post('/updatebahan', [BahanBakuController::class, 'update_bahan']);
-Route::delete('/hapusbahan', [BahanBakuController::class, 'hapus_bahan']);
+//Route::get('/updatebahan/{id_produk}', [ProdukController::class, 'edit']);
+Route::post('/bahan/update', [BahanBakuController::class, 'update_bahan']);
+Route::delete('/hapusbahan/{id_bahan}', [BahanBakuController::class, 'hapus_bahan'])->name('bahan.delete');
 
 Route::get('/profile', [UserController::class, 'index']);
 Route::get('/user', [UserController::class, 'kelola_user']);

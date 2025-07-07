@@ -16,7 +16,7 @@ class BahanBakuModel extends Model
           'nama_bahan',
           'satuan',
           'stok_bahan',
-          'kedaluwarsa_bahan',
+          //'kedaluwarsa_bahan',
           //id_user
           
      ];

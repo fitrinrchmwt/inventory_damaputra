@@ -7,14 +7,9 @@ use Illuminate\Http\Request;
 
 class ProdukController extends Controller
 {
-public function index()
-    {
-        return view('produk.produk');
-    }
-
     public function list_produk()
     {
-        $dataProduk = ProdukModel::select('id_produk', 'nama_produk', 'satuan', 'stok_produk')->get();
+        $dataProduk = ProdukModel::select('id_produk', 'nama_produk', 'satuan', 'stok_produk', 'created_at', 'updated_at')->get();
 
         // Generate ID Produk otomatis
         $lastProduk = ProdukModel::orderBy('id_produk', 'desc')->first();
@@ -26,7 +21,6 @@ public function index()
     }
 
 
-
     public function tambah_produk(Request $request)
     {
 
@@ -36,6 +30,7 @@ public function index()
             'nama_produk' => 'required|string|max:100',
             'satuan' => 'required|in:pcs,pack',
             'stok_produk' => 'required|integer|min:0',
+            //id_user
         ]);
 
         ProdukModel::create([
@@ -51,11 +46,11 @@ public function index()
 
 
     // Menampilkan form edit
-    public function edit($id_produk)
-    {
-        $data = ProdukModel::findOrFail($id_produk);
-        return view('produk.formEditProduk', compact('data'));
-    }
+    // public function edit($id_produk)
+    // {
+    //     $data = ProdukModel::findOrFail($id_produk);
+    //     return view('produk.formEditProduk', compact('data'));
+    // }
 
     public function update_produk(Request $request)
     {
@@ -80,11 +75,13 @@ public function index()
         //return response()->json(['message' => 'Data Produk Berhasil diupdate']);
     }
 
-    public function hapus_produk(Request $request)
-    {
-        $produk = ProdukModel::find($request->id_produk);
-        $produk->delete();
+    public function hapus_produk($id_produk)
+{
+    $produk = ProdukModel::findOrFail($id_produk);
+    $produk->delete();
 
-        return redirect('/produk/list');
-    }
+    return redirect('/produk')->with('success', 'Produk berhasil dihapus.');
+}
+
+
 }

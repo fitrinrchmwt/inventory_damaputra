@@ -21,18 +21,21 @@
             <div class="card-body">
                 <!-- Data Table -->
 
+
+                <!-- Include modal dari file terpisah -->
+                @include('bahan.form')
                 <!-- Tambah Pencatatan -->
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-damava shadow-sm"
-                            style="padding: 10px; margin-bottom: 10px;" data-bs-toggle="modal" data-bs-target="#BahanModal">
+                            style="padding: 10px; margin-bottom: 10px;" data-bs-toggle="modal"
+                            data-bs-target="#BahanModal">
                             <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Data
                         </a>
                     </div>
                 </div>
                 <!-- Modal -->
-                <!-- Include modal dari file terpisah -->
-                @include('bahan.form')
+                
 
                 <!-- End Modal -->
 
@@ -40,10 +43,12 @@
 
 
                 <!-- Table -->
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
+                <div style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-bordered table-striped text-center" id="dataTable" width="100%"
+                        cellspacing="0">
+
+                        <thead style="background-color: #99627A; color: white;" class="text-center">
+                            <tr class="text-center">
                                 <th>No.</th>
                                 <th>ID Bahan</th>
                                 <th>Nama Bahan</th>
@@ -52,36 +57,136 @@
                                 <th>Opsi</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>BB-001</td>
-                                <td>Abon Ayam</td>
-                                <td>Kg</td>
-                                <td class="highlight">0</td>
-                                <td width="35%"><a href="#" class="d-none d-sm-inline-block btn btn-info shadow-sm"
-                                        data-bs-toggle="modal" data-bs-target="#detailBahanModal">
-                                        <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail</a> | <a href="#"
-                                        class="d-none d-sm-inline-block btn btn-warning shadow-sm" data-bs-toggle="modal"
-                                        data-bs-target="#editBahanModal">
-                                        <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a> |
-                                    <a href="javascript:void(0);" onclick="hapusData('123')"
-                                        class="d-none d-sm-inline-block btn btn-danger shadow-sm">
-                                        <i class="fas fa-trash-alt fa-sm text-white-50"></i> Hapus
-                                    </a>
-                                </td>
+                        <tbody class="text-center">
+                            @foreach ($dataBahan as $key => $bahan)
+                                <tr>
+                                    <td>{{ $key + 1 }}</td>
+                                    <td>{{ $bahan->id_bahan }}</td>
+                                    <td>{{ $bahan->nama_bahan }}</td>
+                                    <td>{{ $bahan->satuan }}</td>
+                                    <td>{{ $bahan->stok_bahan }}</td>
+                                    <td width="35%">
+                                        <!-- Tombol Detail -->
+                                        <a href="#" class="d-none d-sm-inline-block btn btn-info shadow-sm"
+                                            data-bs-toggle="modal" data-bs-target="#detailBahanModal{{ $bahan->id_bahan }}"">
+                                                                                            <i class=" fas fa-file-alt fa-sm
+                                            text-white-50"></i>
+                                            Detail</a> |
 
-                            </tr>
+                                        <!-- Tombol Edit -->
+                                        <a href="#" class="d-none d-sm-inline-block btn btn-warning shadow-sm edit-product-btn"
+                                            data-bs-toggle="modal" data-bs-target="#editBahanModal"
+                                            data-id_bahan="{{ $bahan->id_bahan }}" data-nama_bahan="{{ $bahan->nama_bahan }}"
+                                            data-satuan="{{ $bahan->satuan }}" data-stok_bahan="{{ $bahan->stok_bahan }}">
+                                            <i class="fas fa-edit fa-sm text-white-50"></i> Edit
+                                        </a>
+                                        |
+
+                                        <!-- Tombol Hapus -->
+                                        <form action="{{ route('bahan.delete', $bahan->id_bahan) }}" method="POST"
+                                            style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                class="d-none d-sm-inline-block btn btn-danger shadow-sm edit-product-btn"
+                                                data-bs-toggle="modal" data-bs-target="#hapusBahanModal"
+                                                onclick="return confirm('Yakin ingin menghapus bahan ini?')">
+                                                <i class="fas fa-trash-alt fa-sm text-white-50"></i> Hapus</button>
+                                        </form>
+
+                                        <!-- Modal Detail -->
+                                        <div class="modal fade" id="detailBahanModal{{ $bahan->id_bahan }}" tabindex="-1"
+                                            aria-labelledby="modalLabel{{ $bahan->id_bahan }}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="modalLabel{{ $bahan->id_bahan }}">Detail
+                                                            Bahan</h5>
+                                                        <button type="button" class="close" data-bs-dismiss="modal"
+                                                            aria-label="Tutup">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <table class="table table-bordered">
+                                                            <tr>
+                                                                <td>ID Bahan</td>
+                                                                <td>{{ $bahan->id_bahan }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Nama Bahan</td>
+                                                                <td>{{ $bahan->nama_bahan }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Satuan</td>
+                                                                <td>{{ ucfirst($bahan->satuan) }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Stok Bahan</td>
+                                                                <td>{{ $bahan->stok_bahan }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Created At</td>
+                                                                <td>{{ $bahan->created_at ? $bahan->created_at->format('d/m/Y') : '-' }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Updated At</td>
+                                                                <td>{{ $bahan->updated_at ? $bahan->updated_at->format('d/m/Y') : '-' }}
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>ID User</td>
+                                                                <td>{{ $bahan->id_user ?? '-' }}</td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Tutup</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal Detail End -->
+
+
+
+
+                                    </td>
+
+                                </tr>
+
+                            @endforeach
                             <tr>
-                                <td colspan=""><strong>Total</strong></td>
-                                <td colspan=""></td>
-                                <td colspan=""></td>
-                                <td colspan=""></td>
-                                <td class="">0</td>
-                                <td colspan=""></td>
+                                <td colspan="4"><strong>Total</strong></td>
+                                <td><strong>{{ $dataBahan->sum('stok_bahan') }}</strong></td>
+                                <td></td>
                             </tr>
+
                         </tbody>
                     </table>
+
+                    <div id="alert-notifikasi" class="alert alert-success alert-dismissible fade show d-none" role="alert">
+                        <span id="alert-message"></span>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
+                    </div>
+
+
+                    <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            const buttons = document.querySelectorAll('.edit-product-btn');
+
+                            buttons.forEach(button => {
+                                button.addEventListener('click', function () {
+                                    document.getElementById('edit_id_bahan').value = this.dataset.id_bahan;
+                                    document.getElementById('edit_nama_bahan').value = this.dataset.nama_bahan;
+                                    document.getElementById('edit_satuan').value = this.dataset.satuan;
+                                    document.getElementById('edit_stok_bahan').value = this.dataset.stok_bahan;
+                                });
+                            });
+                        });
+                    </script>
                     <!-- Modal Detail Start -->
                     @include('bahan.detailBahan')
 
