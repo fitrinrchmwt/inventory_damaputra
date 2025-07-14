@@ -28,14 +28,13 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-6">
                         <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-damava shadow-sm"
-                            style="padding: 10px; margin-bottom: 10px;" data-bs-toggle="modal"
-                            data-bs-target="#BahanModal">
+                            style="padding: 10px; margin-bottom: 10px;" data-bs-toggle="modal" data-bs-target="#BahanModal">
                             <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Data
                         </a>
                     </div>
                 </div>
                 <!-- Modal -->
-                
+
 
                 <!-- End Modal -->
 
@@ -67,19 +66,18 @@
                                     <td>{{ $bahan->stok_bahan }}</td>
                                     <td width="35%">
                                         <!-- Tombol Detail -->
-                                        <a href="#" class="d-none d-sm-inline-block btn btn-info shadow-sm"
-                                            data-bs-toggle="modal" data-bs-target="#detailBahanModal{{ $bahan->id_bahan }}"">
-                                                                                            <i class=" fas fa-file-alt fa-sm
-                                            text-white-50"></i>
-                                            Detail</a> |
+                                        <a href="#" class=" btn btn-info btn-sm shadow-sm" data-bs-toggle="modal"
+                                            data-bs-target="#detailBahanModal{{ $bahan->id_bahan }}"">
+                                                            <i class=" fas fa-file-alt fa-sm text-white-50"></i>Detail</a> |
+
+
 
                                         <!-- Tombol Edit -->
-                                        <a href="#" class="d-none d-sm-inline-block btn btn-warning shadow-sm edit-product-btn"
+                                        <a href="#" class=" btn btn-warning btn-sm shadow-sm edit-product-btn"
                                             data-bs-toggle="modal" data-bs-target="#editBahanModal"
                                             data-id_bahan="{{ $bahan->id_bahan }}" data-nama_bahan="{{ $bahan->nama_bahan }}"
                                             data-satuan="{{ $bahan->satuan }}" data-stok_bahan="{{ $bahan->stok_bahan }}">
-                                            <i class="fas fa-edit fa-sm text-white-50"></i> Edit
-                                        </a>
+                                            <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a>
                                         |
 
                                         <!-- Tombol Hapus -->
@@ -87,11 +85,10 @@
                                             style="display:inline;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit"
-                                                class="d-none d-sm-inline-block btn btn-danger shadow-sm edit-product-btn"
+                                            <button type="submit" class="btn btn-danger btn-sm shadow-sm edit-product-btn"
                                                 data-bs-toggle="modal" data-bs-target="#hapusBahanModal"
                                                 onclick="return confirm('Yakin ingin menghapus bahan ini?')">
-                                                <i class="fas fa-trash-alt fa-sm text-white-50"></i> Hapus</button>
+                                                <i class="fas fa-trash-alt fa-sm text-white-50"></i>Hapus</button>
                                         </form>
 
                                         <!-- Modal Detail -->
@@ -103,7 +100,7 @@
                                                         <h5 class="modal-title" id="modalLabel{{ $bahan->id_bahan }}">Detail
                                                             Bahan</h5>
                                                         <button type="button" class="close" data-bs-dismiss="modal"
-                                                            aria-label="Tutup">
+                                                            aria-label="Batal">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>
                                                     </div>
@@ -163,7 +160,8 @@
                                 <td><strong>{{ $dataBahan->sum('stok_bahan') }}</strong></td>
                                 <td></td>
                             </tr>
-
+                            <!-- SweetAlert2 CDN -->
+                            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
                         </tbody>
                     </table>
 
@@ -171,6 +169,18 @@
                         <span id="alert-message"></span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
                     </div>
+
+                    @if (session('success'))
+                        <script>
+                            Swal.fire({
+                                title: 'Sukses!',
+                                text: '{{ session('success') }}',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+                        </script>
+                    @endif
+
 
 
                     <script>

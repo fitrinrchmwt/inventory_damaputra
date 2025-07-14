@@ -25,7 +25,7 @@
                             <td>Nama Bahan Baku</td>
                             <td>:</td>
                             <td>
-                                <input type="text" name="nama_bahan" class="form-control" value="">
+                                <input type="text" name="nama_bahan" class="form-control" required>
                             </td>
                         </tr>
                         <tr>
@@ -53,7 +53,7 @@
                         </tr>
                     </table>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button class="btn btn-damava" type="submit" value="">Tambah</button>
                     </div>
                 </form>

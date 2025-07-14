@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="utf-8">
@@ -9,6 +10,10 @@
     <meta name="author" content="">
 
     <title>@yield('title')</title>
+
+    <!-- Untuk CSRF Token di header -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <!-- Custom fonts for this template-->
 
@@ -22,7 +27,8 @@
     <link rel="stylesheet" href="{{ asset('asset/datatables/dataTables.bootstrap4.min.css') }}" type="text/css">
     <style>
         .btn-damava {
-            background-color: #5B2A3D; /* atau sesuaikan dari warna sidebar kamu */
+            background-color: #5B2A3D;
+            /* atau sesuaikan dari warna sidebar kamu */
             color: white;
             border: none;
         }
@@ -76,28 +82,37 @@
                     <i class="fas fa-database"></i>
                     <span>Kelola Data</span>
                 </a>
-                <div id="collapseKelolaData" class="collapse {{ Request::is('produk') || Request::is('bahanbaku') ? 'show' : '' }}">
+                <div id="collapseKelolaData"
+                    class="collapse {{ Request::is('produk') || Request::is('bahanbaku') ? 'show' : '' }}">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item {{ Request::is('produk') ? 'active' : '' }}" href="{{ url('produk') }}">Produk</a>
-                        <a class="collapse-item {{ Request::is('bahanbaku') ? 'active' : '' }}" href="{{ url('bahanbaku') }}">Bahan Baku</a>
+                        <a class="collapse-item {{ Request::is('produk') ? 'active' : '' }}"
+                            href="{{ url('produk') }}">Produk</a>
+                        <a class="collapse-item {{ Request::is('bahanbaku') ? 'active' : '' }}"
+                            href="{{ url('bahanbaku') }}">Bahan Baku</a>
                     </div>
                 </div>
             </li>
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <!-- Kelola Pencatatan -->
-            <li class="nav-item {{ Request::is('kelolaprodukmasuk') || Request::is('kelolaprodukkeluar') || Request::is('kelolabahanmasuk') || Request::is('kelolabahankeluar') ? 'active' : '' }}">
+            <li
+                class="nav-item {{ Request::is('kelolaprodukmasuk') || Request::is('kelolaprodukkeluar') || Request::is('kelolabahanmasuk') || Request::is('kelolabahankeluar') ? 'active' : '' }}">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePencatatan"
                     aria-expanded="{{ Request::is('kelolaprodukmasuk') || Request::is('kelolaprodukkeluar') || Request::is('kelolabahanmasuk') || Request::is('kelolabahankeluar') ? 'true' : 'false' }}">
                     <i class="fas fa-folder-open"></i>
                     <span>Kelola Pencatatan</span>
                 </a>
-                <div id="collapsePencatatan" class="collapse {{ Request::is('kelolaprodukmasuk') || Request::is('kelolaprodukkeluar') || Request::is('kelolabahanmasuk') || Request::is('kelolabahankeluar') ? 'show' : '' }}">
+                <div id="collapsePencatatan"
+                    class="collapse {{ Request::is('kelolaprodukmasuk') || Request::is('kelolaprodukkeluar') || Request::is('kelolabahanmasuk') || Request::is('kelolabahankeluar') ? 'show' : '' }}">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item {{ Request::is('kelolaprodukmasuk') ? 'active' : '' }}" href="{{ url('kelolaprodukmasuk') }}">Produk Masuk</a>
-                        <a class="collapse-item {{ Request::is('kelolaprodukkeluar') ? 'active' : '' }}" href="{{ url('kelolaprodukkeluar') }}">Produk Keluar</a>
-                        <a class="collapse-item {{ Request::is('kelolabahanmasuk') ? 'active' : '' }}" href="{{ url('kelolabahanmasuk') }}">Bahan Masuk</a>
-                        <a class="collapse-item {{ Request::is('kelolabahankeluar') ? 'active' : '' }}" href="{{ url('kelolabahankeluar') }}">Bahan Keluar</a>
+                        <a class="collapse-item {{ Request::is('kelolaprodukmasuk') ? 'active' : '' }}"
+                            href="{{ url('kelolaprodukmasuk') }}">Produk Masuk</a>
+                        <a class="collapse-item {{ Request::is('kelolaprodukkeluar') ? 'active' : '' }}"
+                            href="{{ url('kelolaprodukkeluar') }}">Produk Keluar</a>
+                        <a class="collapse-item {{ Request::is('kelolabahanmasuk') ? 'active' : '' }}"
+                            href="{{ url('kelolabahanmasuk') }}">Bahan Masuk</a>
+                        <a class="collapse-item {{ Request::is('kelolabahankeluar') ? 'active' : '' }}"
+                            href="{{ url('kelolabahankeluar') }}">Bahan Keluar</a>
                     </div>
                 </div>
             </li>
@@ -117,10 +132,13 @@
                     <i class="fas fa-fw fa-chart-line"></i>
                     <span>Laporan</span>
                 </a>
-                <div id="collapseLaporan" class="collapse {{ Request::is('laporanproduk') || Request::is('laporanbahan') ? 'show' : '' }}">
+                <div id="collapseLaporan"
+                    class="collapse {{ Request::is('laporanproduk') || Request::is('laporanbahan') ? 'show' : '' }}">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item {{ Request::is('laporanproduk') ? 'active' : '' }}" href="{{ url('laporanproduk') }}">Laporan Produk</a>
-                        <a class="collapse-item {{ Request::is('laporanbahan') ? 'active' : '' }}" href="{{ url('laporanbahan') }}">Laporan Bahan</a>
+                        <a class="collapse-item {{ Request::is('laporanproduk') ? 'active' : '' }}"
+                            href="{{ url('laporanproduk') }}">Laporan Produk</a>
+                        <a class="collapse-item {{ Request::is('laporanbahan') ? 'active' : '' }}"
+                            href="{{ url('laporanbahan') }}">Laporan Bahan</a>
                     </div>
                 </div>
             </li>
@@ -154,7 +172,8 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <div class="sidebar-brand-text mx-3" style="font-weight: bold;">PT DAMA PUTRA SEJAHTERA <sup></sup></div>
+                    <div class="sidebar-brand-text mx-3" style="font-weight: bold;">PT DAMA PUTRA SEJAHTERA <sup></sup>
+                    </div>
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -175,7 +194,7 @@
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
-                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" ></i>
+                                    <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
                             </div>
@@ -234,7 +253,7 @@
     </div>
 
     <!-- Bootstrap core JavaScript-->
-     
+
     <script src="{{ asset('asset/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('asset/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
@@ -282,7 +301,7 @@
 
 
 
-    
+
 </body>
 
 

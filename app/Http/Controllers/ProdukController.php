@@ -9,7 +9,7 @@ class ProdukController extends Controller
 {
     public function list_produk()
     {
-        $dataProduk = ProdukModel::select('id_produk', 'nama_produk', 'satuan', 'stok_produk', 'created_at', 'updated_at')->get();
+        $dataProduk = ProdukModel::select('id_produk', 'nama_produk', 'satuan', 'stok_produk', 'id_user', 'created_at', 'updated_at')->get();
 
         // Generate ID Produk otomatis
         $lastProduk = ProdukModel::orderBy('id_produk', 'desc')->first();
@@ -41,7 +41,9 @@ class ProdukController extends Controller
             //id_user
         ]);
 
-        return redirect('/produk');
+        return redirect('/produk')->with('success', 'Produk berhasil ditambahkan!');
+        //return redirect('/produk')->with('error', 'Gagal menambahkan produk!');
+
     }
 
 
@@ -75,13 +77,23 @@ class ProdukController extends Controller
         //return response()->json(['message' => 'Data Produk Berhasil diupdate']);
     }
 
-    public function hapus_produk($id_produk)
+        public function hapus_produk($id_produk)
 {
     $produk = ProdukModel::findOrFail($id_produk);
     $produk->delete();
 
-    return redirect('/produk')->with('success', 'Produk berhasil dihapus.');
+        return redirect('/produk')->with('success', 'Produk berhasil dihapus.');
 }
+
+//     public function destroy($id)
+// {
+//     ProdukModel::destroy($id);
+//     return response()->json(['message' => 'Produk berhasil dihapus']);
+// }
+
+
+
+
 
 
 }

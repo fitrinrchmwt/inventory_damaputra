@@ -65,9 +65,8 @@
                                         <!-- Tombol Detail -->
                                         <a href="#" class="d-none d-sm-inline-block btn btn-info shadow-sm"
                                             data-bs-toggle="modal" data-bs-target="#detailProdukModal{{ $produk->id_produk }}"">
-                                                                            <i class=" fas fa-file-alt fa-sm
-                                            text-white-50"></i>
-                                            Detail</a> |
+                                                                                                    <i class=" fas fa-file-alt
+                                            fa-sm text-white-50"></i>Detail</a> |
 
                                         <!-- Tombol Edit -->
                                         <a href="#" class="d-none d-sm-inline-block btn btn-warning shadow-sm edit-product-btn"
@@ -160,6 +159,8 @@
                                 <td><strong>{{ $dataProduk->sum('stok_produk') }}</strong></td>
                                 <td></td>
                             </tr>
+                            <!-- SweetAlert2 CDN -->
+                            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
                         </tbody>
                     </table>
@@ -168,6 +169,27 @@
                         <span id="alert-message"></span>
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Tutup"></button>
                     </div>
+                    @if (session('success'))
+                        <script>
+                            Swal.fire({
+                                title: 'Sukses!',
+                                text: '{{ session('success') }}',
+                                icon: 'success',
+                                confirmButtonText: 'OK'
+                            });
+                        </script>
+                    @endif
+
+                    <!-- @if (session('error'))
+                        <script>
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: '{{ session('error') }}',
+                                confirmButtonColor: '#d33'
+                            });
+                        </script>
+                    @endif -->
 
 
                     <script>
@@ -185,7 +207,7 @@
                         });
                     </script>
 
-                    
+
 
 
                     @include('produk.formEditProduk')

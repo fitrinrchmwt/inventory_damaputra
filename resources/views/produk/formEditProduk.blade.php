@@ -18,8 +18,7 @@
                         </tr>
                         <tr>
                             <td>Nama Produk</td>
-                            <td><input type="text" id="edit_nama_produk" name="nama_produk" class="form-control"
-                                    required></td>
+                            <td><input type="text" id="edit_nama_produk" name="nama_produk" class="form-control" required></td>
                         </tr>
                         <tr>
                             <td>Satuan</td>
@@ -37,7 +36,7 @@
                         </tr>
                     </table>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                         <button class="btn btn-damava" type="submit">Ubah</button>
                     </div>
                 </form>

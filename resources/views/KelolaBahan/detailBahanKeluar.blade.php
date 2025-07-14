@@ -1,4 +1,4 @@
-<div class="modal fade" id="detailBahanKeluarModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="detailBahanKeluarModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <!-- Form detail -->
+                Form detail
                 <form action="" method="POST" enctype="multipart/form-data">
                     <table class="table table-bordered" id="" width="100%" cellspacing="0">
                         <tr>
@@ -74,4 +74,4 @@
             </div>
         </div>
     </div>
-</div>  
+</div>   -->

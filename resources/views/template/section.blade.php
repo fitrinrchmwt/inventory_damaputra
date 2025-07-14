@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('asset/datatables/dataTables.bootstrap4.min.css') }}" type="text/css">
     <style>
         .btn-damava {
-            background-color: #8e3f6d; /* atau sesuaikan dari warna sidebar kamu */
+            background-color: #8e3f6d; /* atau sesuaikan dari warna sidebar */
             color: white;
             border: none;
         }
@@ -86,7 +86,7 @@
 
             <!-- Nav Item - Utilities Collapse Menu -->
             <!-- Kelola Pencatatan -->
-            <li class="nav-item {{ Request::is('kelolaprodukmasuk') || Request::is('kelolaprodukkeluar') || Request::is('kelolabahanmasuk') || Request::is('kelolabahankeluar') ? 'active' : '' }}">
+            <li class="nav-item {{ Request::is('primary') || Request::is('kelolaprodukkeluar') || Request::is('kelolabahanmasuk') || Request::is('kelolabahankeluar') ? 'active' : '' }}">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePencatatan"
                     aria-expanded="{{ Request::is('kelolaprodukmasuk') || Request::is('kelolaprodukkeluar') || Request::is('kelolabahanmasuk') || Request::is('kelolabahankeluar') ? 'true' : 'false' }}">
                     <i class="fas fa-folder-open"></i>

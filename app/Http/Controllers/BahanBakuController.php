@@ -11,13 +11,13 @@ class BahanBakuController extends Controller
 
     public function list_bahan()
     {
-        $dataBahan = BahanBakuModel::select('id_bahan', 'nama_bahan', 'satuan', 'stok_bahan','created_at','updated_at')->get();
+        $dataBahan = BahanBakuModel::select('id_bahan', 'nama_bahan', 'satuan', 'stok_bahan','created_at','updated_at','id_user')->get();
 
         // Generate ID Bahan otomatis
         $lastBahan = BahanBakuModel::orderBy('id_bahan', 'desc')->first();
         $lastNumber = $lastBahan ? (int) substr($lastBahan->id_bahan, 3) : 0;
         $newNumber = $lastNumber + 1;
-        $kodeOtomatis = 'PR-' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
+        $kodeOtomatis = 'BB-' . str_pad($newNumber, 3, '0', STR_PAD_LEFT);
 
         return view('bahan.bahan', compact('dataBahan', 'kodeOtomatis'));
     }
@@ -42,7 +42,7 @@ class BahanBakuController extends Controller
             //id_user
         ]);
 
-        return redirect('/bahanbaku');
+        return redirect('/bahanbaku')->with('success', 'Bahan Baku berhasil ditambahkan!');
     }
 
     public function update_bahan(Request $request)

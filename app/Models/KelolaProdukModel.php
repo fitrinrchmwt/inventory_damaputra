@@ -13,6 +13,7 @@ class KelolaProdukModel extends Model
      public $timestamps = true;
      protected $fillable = [
           'id_kelola_pr',
+          'id_produk',
           'jenis_pencatatan',
           'id_produk',
           'jumlah_produk',
