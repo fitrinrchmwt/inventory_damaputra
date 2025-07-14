@@ -39,11 +39,11 @@
                         <tbody>
                             @php $total = 0; @endphp
                             @foreach ($dataBahanKeluar as $index => $bahan)
-                                @if ($bahan->jenis_pencatatan == 'pengeluaran_bahan')
+                                @if ($bahan->jenis_pencatatan == 'pengeluaran_bahanbaku')
                                     @php $total += $bahan->jumlah_bahan; @endphp
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
-                                        <td>{{ $bahan->id_kelola_pr }}</td>
+                                        <td>{{ $bahan->id_kelola_bb }}</td>
                                         <td>{{ $bahan->id_bahan }}</td>
                                         <td>{{ $bahan->jumlah_bahan }}</td>
                                         <td>{{ $bahan->keterangan }}</td>
@@ -51,13 +51,12 @@
                                         </td>
                                         <td>
                                             <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal"
-                                                data-bs-target="#detailBahanKeluarModal{{ $bahan->id_kelola_pr }}">
-                                                <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail
-                                            </a>
+                                                data-bs-target="#detailBahanKeluarModal{{ $bahan->id_kelola_bb }}">
+                                                <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail</a>
 
                                             <!-- Modal Detail -->
-                                            <div class="modal fade" id="detailBahanKeluarModal{{ $bahan->id_kelola_pr }}"
-                                                tabindex="-1" aria-labelledby="modalLabel{{ $bahan->id_kelola_pr }}"
+                                            <div class="modal fade" id="detailBahanKeluarModal{{ $bahan->id_kelola_bb }}"
+                                                tabindex="-1" aria-labelledby="modalLabel{{ $bahan->id_kelola_bb }}"
                                                 aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
