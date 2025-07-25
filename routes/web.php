@@ -91,6 +91,11 @@ Route::get('/laporan-bahan/pdf', [LaporanBahanController::class, 'bahan_pdf']);
 //Route::post('/produk/update', [ProdukController::class, 'update_produk']);
 
 Route::get('/produk-masuk/filter', [KelolaProdukController::class, 'filterProdukMasuk']);
+Route::get('/produk-keluar/filter', [KelolaProdukController::class, 'filterProdukKeluar']);
+
+Route::get('/bahan-masuk/filter', [KelolaBahanController::class, 'filterBahanMasuk']);
+Route::get('/bahan-keluar/filter', [KelolaBahanController::class, 'filterBahanKeluar']);
+
 
 Route::get('/dashboard/terbaru', [DashboardController::class, 'getTerbaru']);
 

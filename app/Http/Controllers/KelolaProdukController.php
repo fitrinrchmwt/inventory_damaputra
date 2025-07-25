@@ -195,6 +195,33 @@ class KelolaProdukController extends Controller
     }
 
 
+     public function filterProdukKeluar(Request $request)
+    {
+
+
+        $query = KelolaProdukModel::with('produk') // relasi ke model Produk
+            ->where('jenis_pencatatan', 'pengeluaran_produk');
+        
+        if ($request->nama_produk) {
+            $query->whereHas('produk', function ($q) use ($request) {
+                $q->where('nama_produk', 'like', '%' . $request->nama_produk . '%');
+            });
+        }
+        
+
+        if ($request->tanggal) {
+            $query->whereDate('created_at', '=', $request->tanggal);
+        }
+        
+        $data = $query->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
+
+
 
 
     /**

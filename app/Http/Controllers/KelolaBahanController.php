@@ -65,6 +65,33 @@ class KelolaBahanController extends Controller
         return redirect('/kelolabahanmasuk')->with('success', 'Data bahan masuk berhasil disimpan.');
     }
 
+
+     public function filterBahanMasuk(Request $request)
+    {
+
+
+        $query = KelolaBahanModel::with('bahanbaku') // relasi ke model Produk
+            ->where('jenis_pencatatan', 'pemasukan_bahanbaku');
+        
+        if ($request->nama_bahan) {
+            $query->whereHas('bahanbaku', function ($q) use ($request) {
+                $q->where('nama_bahan', 'like', '%' . $request->nama_bahan . '%');
+            });
+        }
+        
+
+        if ($request->tanggal) {
+            $query->whereDate('created_at', '=', $request->tanggal);
+        }
+        
+        $data = $query->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
+
     public function bahan_keluar()
     {
         $dataBahanKeluar = KelolaBahanModel::select(
@@ -126,6 +153,33 @@ class KelolaBahanController extends Controller
         $bahan = BahanBakuModel::find($id_bahan);
         return response()->json([
             'nama_bahan' => $bahan ? $bahan->nama_bahan : null
+        ]);
+    }
+
+
+    public function filterBahanKeluar(Request $request)
+    {
+
+
+        $query = KelolaBahanModel::with('bahanbaku') // relasi ke model Produk
+            ->where('jenis_pencatatan', 'pengeluaran_bahanbaku');
+        
+        if ($request->nama_bahan) {
+            $query->whereHas('bahanbaku', function ($q) use ($request) {
+                $q->where('nama_bahan', 'like', '%' . $request->nama_bahan . '%');
+            });
+        }
+        
+
+        if ($request->tanggal) {
+            $query->whereDate('created_at', '=', $request->tanggal);
+        }
+        
+        $data = $query->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
         ]);
     }
 }
