@@ -45,7 +45,7 @@
                 @include('KelolaBahan.formBahanMasuk')
 
                 <div style="max-height: 400px; overflow-y: auto;">
-                    <table class="table table-bordered table-striped text-center" width="100%" cellspacing="0" id="tabel-bahan">
+                    <table class="table table-bordered table-striped text-center" width="100%" cellspacing="0" id="tabel-bahanmasuk">
                         <thead style="background-color: #99627A; color: white;">
                             <tr>
                                 <th>No.</th>
@@ -57,9 +57,10 @@
                                 <th>Opsi</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody-bahan-masuk">
+                        <tbody>
                             @php $total = 0; @endphp
                             @foreach ($dataBahanMasuk as $index => $bahan)
+                            
                                 @if ($bahan->jenis_pencatatan == 'pemasukan_bahanbaku')
                                     @php $total += $bahan->jumlah_bahan; @endphp
                                     <tr>
@@ -162,12 +163,13 @@
 @endsection
 
 
-
 @push('scripts')
+
 <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <script>
-    $('#btnFilter').click( function () {
+    $('#btnFilter').click(function () {
         var nama_bahan = $('#filter_nama_bahan').val();
         var tanggal = $('#filter_tanggal').val();
 
@@ -195,117 +197,81 @@
                                 let diff = (expired - now) / (1000 * 60 * 60 * 24);
 
                                 if (diff < 0) {
-                                    status = '<span class="badge bg-danger text-white">Kedaluwarsa</span>'
-                                } else if(diff < 7){
-                                    status = '<span class="badge bg-warning text-white">Hampir Kedaluwarsa</span>'
-                                }    else {
-                                    status = '<span class="badge bg-success text-white">Belum Kedaluwarsa</span>'
+                                    status = '<span class="badge bg-danger text-white">Kedaluwarsa</span>';
+                                } else if (diff < 7) {
+                                    status = '<span class="badge bg-warning text-white">Hampir Kedaluwarsa</span>';
+                                } else {
+                                    status = '<span class="badge bg-success text-white">Belum Kedaluwarsa</span>';
                                 }
                             }
 
-                                    rows += `<tr>
-                                        <td>${no++}</td>
-                                        <td>${item.id_kelola_pr}</td>
-                                        <td>${item.bahan?.nama_bahan ?? '-'}</td>
-                                        <td>${item.jumlah_bahan}</td>
-                                        <td>${item.keterangan ?? '-'}</td>
-                                        <td>${item.kedaluwarsa_bahan_kelola ?  moment(item.kedaluwarsa_bahan_kelola).format('DD/MM/YYYY')  : '-'}</td >
-                                        
-                                        <td>
-                                                <a href="#" class="btn btn-info btn-sm shadow-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#detailBahanMasukModal${item.id_kelola_pr}">
-                                                    <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail
-                                                </a>
+                            rows += `<tr>
+                                <td>${no++}</td>
+                                <td>${item.id_kelola_bb}</td>
+                                <td>${item.bahanbaku?.nama_bahan ?? '-'}</td>
+                                <td>${item.jumlah_bahan}</td>
+                                <td>${item.keterangan ?? '-'}</td>
+                                <td>${item.kedaluwarsa_bahan_kelola ? moment(item.kedaluwarsa_bahan_kelola).format('DD/MM/YYYY') : '-'}</td>
+                                <td>
+                                    <a href="#" class="btn btn-info btn-sm shadow-sm" data-bs-toggle="modal"
+                                       data-bs-target="#detailBahanMasukModal${item.id_kelola_pr}">
+                                        <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail
+                                    </a>
 
-                                                <!-- Modal Detail -->
-                                                <div class="modal fade" id="detailBahanMasukModal${ item.id_kelola_pr }"
-                                                    tabindex="-1" aria-labelledby="modalLabel${ item.id_kelola_pr }"
-                                                    aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="modalLabel${ item.id_bahan }">Detail
-                                                                    Bahan Masuk</h5>
-                                                                <button type="button" class="close" data-bs-dismiss="modal"
-                                                                    aria-label="Tutup">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                <table class="table table-bordered">
-                                                                    <tr>
-                                                                        <td>ID Kelola Bahan</td>
-                                                                        <td>${ item.id_kelola_pr }</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>ID Bahan</td>
-                                                                        <td>${ item.id_bahan }</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Nama Bahan</td>
-                                                                        <td>${ item.bahan.nama_bahan }</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Satuan</td>
-                                                                        <td>${ item.bahan.satuan }</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Jumlah</td>
-                                                                        <td>${ item.jumlah_bahan }</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Keterangan</td>
-                                                                        <td>${ item.keterangan }</td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>kedaluwarsa</td>
-                                                                        <td>${ item.kedaluwarsa_bahan_kelola ?  moment(item.kedaluwarsa_bahan_kelola).format('DD/MM/YYYY') : '-' }
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Tanggal Pencatatan</td>
-                                                                        <td>${ item.created_at ? moment(item.created_at).format('DD/MM/YYYY') : '-' }
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>Terakhir Diubah</td>
-                                                                        <td>${ item.updated_at ? moment(item.updated_at).format('DD/MM/YYYY')  : '-' }
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>ID User</td>
-                                                                        <td>${ item.id_user ?? '-' }</td>
-                                                                    </tr>
-                                                                </table>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary"
-                                                                    data-bs-dismiss="modal">Tutup</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                    <!-- Modal Detail -->
+                                    <div class="modal fade" id="detailBahanMasukModal${item.id_kelola_pr}"
+                                         tabindex="-1" aria-labelledby="modalLabel${item.id_kelola_pr}"
+                                         aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="modalLabel${item.id_bahan}">Detail Bahan Masuk</h5>
+                                                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Tutup">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
                                                 </div>
-                                                <!-- Modal Detail End -->
-                                            </td>
-                                    </tr > `;
-                            });
+                                                <div class="modal-body">
+                                                    <table class="table table-bordered">
+                                                        <tr><td>ID Kelola Bahan</td><td>${item.id_kelola_bb}</td></tr>
+                                                        <tr><td>ID Bahan</td><td>${item.id_bahan}</td></tr>
+                                                        <tr><td>Nama Bahan</td><td>${item.bahanbaku.nama_bahan}</td></tr>
+                                                        <tr><td>Satuan</td><td>${item.bahanbaku.satuan}</td></tr>
+                                                        <tr><td>Jumlah</td><td>${item.jumlah_bahan}</td></tr>
+                                                        <tr><td>Keterangan</td><td>${item.keterangan}</td></tr>
+                                                        <tr><td>Kedaluwarsa</td><td>${item.kedaluwarsa_bahan_kelola ? moment(item.kedaluwarsa_bahan_kelola).format('DD/MM/YYYY') : '-'}</td></tr>
+                                                        <tr><td>Tanggal Pencatatan</td><td>${item.created_at ? moment(item.created_at).format('DD/MM/YYYY') : '-'}</td></tr>
+                                                        <tr><td>Terakhir Diubah</td><td>${item.updated_at ? moment(item.updated_at).format('DD/MM/YYYY') : '-'}</td></tr>
+                                                        <tr><td>ID User</td><td>${item.id_user ?? '-'}</td></tr>
+                                                    </table>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Modal Detail End -->
+                                </td>
+                            </tr>`;
+                        });
 
-                rows += `< tr >
-                                    <td colspan="3"><strong>Total</strong></td>
-                                    <td><strong>${total}</strong></td>
-                                    <td colspan="3"></td>
-                                </tr > `;
-            } else {
-                rows = `< tr > <td colspan="7" class="text-center">Tidak ada data ditemukan.</td></tr >`;
-            }
+                        rows += `<tr>
+                            <td colspan="3"><strong>Total</strong></td>
+                            <td><strong>${total}</strong></td>
+                            <td colspan="3"></td>
+                        </tr>`;
+                    } else {
+                        rows = `<tr><td colspan="7" class="text-center">Tidak ada data ditemukan.</td></tr>`;
+                    }
 
-                            $('#tabel-bahan tbody').html(rows);
-                        }
-                    },
+                    $('#tabel-bahanmasuk tbody').html(rows);
+                }
+            },
             error: function () {
                 alert('Gagal mengambil data.');
             }
-                });
-            });
+        });
+    });
 </script>
+
 @endpush
