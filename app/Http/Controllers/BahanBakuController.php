@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\BahanBakuModel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class BahanBakuController extends Controller
 {
@@ -39,7 +40,7 @@ class BahanBakuController extends Controller
             'satuan' => $request->satuan,
             'stok_bahan' => $request->stok_bahan,
             //'kedaluwarsa_bahan' => $request->kedaluwarsa_bahan,
-            //id_user
+            'id_user' => session('id_user'),
         ]);
 
         return redirect('/bahanbaku')->with('success', 'Bahan Baku berhasil ditambahkan!');

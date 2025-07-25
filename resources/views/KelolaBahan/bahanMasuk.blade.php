@@ -16,8 +16,7 @@
                     <div class="col-sm-12 col-md-6">
                         <a href="#" class="btn btn-sm btn-damava shadow-sm" style="padding: 10px; margin-bottom: 10px;"
                             data-bs-toggle="modal" data-bs-target="#modalBahanMasuk">
-                            <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Pencatatan
-                        </a>
+                            <i class="fas fa-plus fa-sm text-white-50"></i> Tambah Pencatatan</a>
                     </div>
                 </div>
 
@@ -29,7 +28,7 @@
                             <tr>
                                 <th>No.</th>
                                 <th>ID Bahan Masuk</th>
-                                <th>ID Bahan</th>
+                                <th>Nama Bahan</th>
                                 <th>Jumlah</th>
                                 <th>Keterangan</th>
                                 <th>Kadaluarsa</th>
@@ -44,7 +43,7 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $bahan->id_kelola_bb }}</td>
-                                        <td>{{ $bahan->id_bahan }}</td>
+                                        <td>{{ $bahan->nama_bahan }}</td>
                                         <td>{{ $bahan->jumlah_bahan }}</td>
                                         <td>{{ $bahan->keterangan }}</td>
                                         <td>{{ $bahan->kedaluwarsa_bahan_kelola ? \Carbon\Carbon::parse($bahan->kedaluwarsa_bahan_kelola)->format('d/m/Y') : '-' }}
@@ -52,8 +51,7 @@
                                         <td>
                                             <a href="#" class="btn btn-info btn-sm shadow-sm" data-bs-toggle="modal"
                                                 data-bs-target="#detailBahanMasukModal{{ $bahan->id_kelola_bb }}">
-                                                <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail
-                                            </a>
+                                                <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail</a>
 
                                             <!-- Modal Detail -->
                                             <div class="modal fade" id="detailBahanMasukModal{{ $bahan->id_kelola_bb }}"

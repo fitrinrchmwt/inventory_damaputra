@@ -11,9 +11,21 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LaporanProdukController;
 use App\Http\Controllers\LaporanBahanController;
 
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::post('/login', [LoginController::class, 'proses_cek_login_db']);
+Route::get('/lupapassword', [LoginController::class, 'lupa_password']);
+
+Route::get('/user', [UserController::class, 'kelola_user']);
+Route::post('/register', [UserController::class, 'store']);
+Route::put('/user/update', [UserController::class, 'update']);
+Route::delete('/user/delete/{id}', [UserController::class, 'destroy']);
+
+Route::get('/profile', [UserController::class, 'index']);
+Route::get('/riwayat-login', [UserController::class, 'riwayatLogin']);
 
 Route::get('/', [LoginController::class, 'index']);
-Route::get('/lupapassword', [LoginController::class, 'lupa_password']);
+
 Route::get('/dashboard', [DashboardController::class, 'dashboard']);
 
 Route::get('/kelolaprodukmasuk', [KelolaProdukController::class, 'produk_masuk']);
@@ -57,10 +69,28 @@ Route::delete('/hapusbahan/{id_bahan}', [BahanBakuController::class, 'hapus_baha
 
 Route::get('/profile', [UserController::class, 'index']);
 Route::get('/user', [UserController::class, 'kelola_user']);
-Route::get('/laporanproduk', [LaporanProdukController::class, 'index']);
-Route::get('/laporanbahan', [LaporanBahanController::class, 'index']);
+Route::get('/tes-session', function(){
+    return Session::all();
+});
+
+//laporan
+Route::get('/laporanproduk', [LaporanProdukController::class, 'laporan_produk']);
+Route::get('/rekap-produk', [LaporanProdukController::class, 'rekapproduk']);
+Route::get('/laporan-produk/excel', [LaporanProdukController::class, 'produk_Excel']);
+Route::get('/laporan-produk/pdf', [LaporanProdukController::class, 'produk_pdf']);
+
+//laporan bahan baku
+Route::get('/laporanbahan', [LaporanBahanController::class, 'laporan_bahan']);
+Route::get('/rekap-bahan', [LaporanBahanController::class, 'rekapbahan']);
+Route::get('/laporan-bahan/excel', [LaporanBahanController::class, 'bahan_Excel']);
+Route::get('/laporan-bahan/pdf', [LaporanBahanController::class, 'bahan_pdf']);
 
 //Route::get('/produk/create', [ProdukController::class, 'create']);
 
 //Route::get('/produk/form/{id_produk}', [ProdukController::class, 'edit']);
 //Route::post('/produk/update', [ProdukController::class, 'update_produk']);
+
+Route::get('/produk-masuk/filter', [KelolaProdukController::class, 'filterProdukMasuk']);
+
+Route::get('/dashboard/terbaru', [DashboardController::class, 'getTerbaru']);
+

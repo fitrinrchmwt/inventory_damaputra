@@ -29,10 +29,9 @@
                             <tr>
                                 <th>No.</th>
                                 <th>ID Produk Keluar</th>
-                                <th>ID Produk</th>
+                                <th>Nama Produk</th>
                                 <th>Jumlah</th>
                                 <th>Keterangan</th>
-                                <th>Kadaluarsa</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -44,11 +43,10 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $produk->id_kelola_pr }}</td>
-                                        <td>{{ $produk->id_produk }}</td>
+                                        <td>{{ $produk->nama_produk }}</td>
                                         <td>{{ $produk->jumlah_produk }}</td>
                                         <td>{{ $produk->keterangan }}</td>
-                                        <td>{{ $produk->kedaluwarsa_produk_kelola ? \Carbon\Carbon::parse($produk->kedaluwarsa_produk_kelola)->format('d/m/Y') : '-' }}
-                                        </td>
+                                        
                                         <td>
                                             <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#detailProdukKeluarModal{{ $produk->id_kelola_pr }}">

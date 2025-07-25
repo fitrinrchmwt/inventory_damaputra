@@ -123,7 +123,7 @@
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Form detail -->
-                                                <form action="" method="POST" enctype="multipart/form-data">
+                                                <!-- <form action="" method="POST" enctype="multipart/form-data">
                                                     <table class="table table-bordered" id="" width="100%"
                                                         cellspacing="0">
                                                         <tr>
@@ -142,7 +142,7 @@
                                                             <td>PR-001</td>
                                                         </tr>
                                                         <tr>
-                                                            <td>Nama Produk</td> -->
+                                                            <td>Nama Produk</td> --> -->
                                                             <!-- <td>:</td>
                                                             <td>Abon Ayam</td>
                                                         </tr>

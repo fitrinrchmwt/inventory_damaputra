@@ -52,11 +52,6 @@
                     <input type="text" name="keterangan" class="form-control">
                 </div>
 
-                <div class="form-group mb-2">
-                    <label>Kadaluarsa</label>
-                    <input type="date" name="kedaluwarsa_produk_kelola" class="form-control">
-                </div>
-
                 <input type="hidden" name="id_user" value="ADM-001"> {{-- ganti dengan user login --}}
             </div>
 

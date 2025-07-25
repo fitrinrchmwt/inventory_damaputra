@@ -56,7 +56,7 @@
                     <!-- Kadaluarsa -->
                     <div class="form-group mb-2">
                         <label>Kadaluarsa</label>
-                        <input type="date" name="kedaluwarsa_produk_kelola" class="form-control">
+                        <input type="date" name="kedaluwarsa_produk_kelola" class="form-control" required>
                     </div>
 
                     <!-- Hidden Input -->

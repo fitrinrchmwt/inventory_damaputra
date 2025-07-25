@@ -11,46 +11,17 @@
                 <!-- Form detail -->
                 <form action="" method="POST" enctype="multipart/form-data">
                     <table class="table table-bordered" id="" width="100%" cellspacing="0">
-                        <tr>
-                            <td>ID User</td>
-                            <td>:</td>
-                            <td>
-                                ADM-001
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Email</td>
-                            <td>:</td>
-                            <td>
-                                admin01@gmail.com
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Username</td>
-                            <td>:</td>
-                            <td>
-                                Admin1
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Password</td>
-                            <td>:</td>
-                            <td>
-                                admin12345
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Level User</td>
-                            <td>:</td>
-                            <td>
-                                Admin
-                            </td>
-                        </tr>
+                        <tr><td>ID User</td><td>:</td><td id="user-modal-id_user">{{ $user->id_user }}</td></tr>
+                        <tr><td>Email</td><td>:</td><td id="user-modal-email">{{ $user->email }}</td></tr>
+                        <tr><td>Username</td><td>:</td><td id="user-modal-username">{{ $user->username }}</td></tr>
+                        <tr><td>Level</td><td>:</td><td id="user-modal-level">{{ $user->level_user }}</td></tr>
+                        <tr><td>Dibuat</td><td>:</td><td id="user-modal-created">{{ $user->created_at }}</td></tr>
+                        <tr><td>Diedit</td><td>:</td><td id="user-modal-updated">{{ $user->updated_at }}</td></tr>
                     </table>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>

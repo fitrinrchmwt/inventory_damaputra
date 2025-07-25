@@ -36,6 +36,17 @@
         .btn-damava:hover {
             background-color: #a14d7e;
         }
+        .sidebar .nav-item .collapse .collapse-inner .collapse-item.active,.sidebar .nav-item .collapsing .collapse-inner .collapse-item.active {
+            color: #8e3f6d;
+            font-weight: 700
+        }
+
+        .page-item.active .page-link {
+            z-index: 3;
+            color: #fff;
+            background-color: #8e3f6d;
+            border-color: #8e3f6d;
+        }
     </style>
 
 </head>
@@ -144,14 +155,20 @@
             </li>
 
             <!-- User -->
-            <li class="nav-item {{ Request::is('user') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ url('user') }}">
-                    <i class="fas fa-fw fa-user"></i>
-                    <span>User</span>
+            <li class="nav-item {{ Request::is('user') || Request::is('riwayat-login') ? 'active' : '' }}">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUser"
+                    aria-expanded="{{ Request::is('user') || Request::is('riwayat-login') ? 'true' : 'false' }}">
+                    <i class="fas fa-users"></i>
+                    <span>Kelola User</span>
                 </a>
+                <div id="collapseUser" class="collapse {{ Request::is('user') || Request::is('riwayat-login') ? 'show' : '' }}">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <a class="collapse-item {{ Request::is('user') ? 'active' : '' }}" href="{{ url('user') }}">User</a>
+                        <a class="collapse-item {{ Request::is('riwayat-login') ? 'active' : '' }}" href="{{ url('riwayat-login') }}">Riwayat</a>
+                    </div>
+                </div>
             </li>
             <hr class="sidebar-divider">
-
 
 
         </ul>
@@ -182,7 +199,7 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-2x fa-user-circle"></i>
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Session::get('username') }}</span>
                                 <i class="fas fa-angle-down"></i>
                             </a>
                             <!-- Dropdown - User Information -->
@@ -193,7 +210,9 @@
                                     Profile
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a href="{{ route('logout') }}" 
+                                class="dropdown-item"
+                                onclick="return confirm('Yakin ingin logout?')">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -299,8 +318,9 @@
         }
     </script>
 
-
-
+    @yield('script')
+    
+    @stack('scripts')
 
 </body>
 

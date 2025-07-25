@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\KelolaProdukModel;
 use Illuminate\Http\Request;
 use App\Models\ProdukModel;
+use App\Models\User;
 
 class KelolaProdukController extends Controller
 {
@@ -28,11 +29,16 @@ class KelolaProdukController extends Controller
             'mengelola_produk.created_at',
             'mengelola_produk.updated_at',
             'produk.nama_produk',
-            'produk.satuan'
-            //'id_user',
+            'produk.satuan',
+            'user.id_user',
+
         )->join('produk', 'produk.id_produk', '=', 'mengelola_produk.id_produk')
+            ->join('user', 'user.id_user', '=', 'mengelola_produk.id_user')
             ->where('jenis_pencatatan', 'pemasukan_produk')
+            ->orderBy('mengelola_produk.created_at', 'desc')
             ->get();
+
+
 
         //Generate ID otomatis khusus pemasukan
         $last = KelolaProdukModel::where('jenis_pencatatan', 'pemasukan_produk')->orderBy('id_kelola_pr', 'desc')->first();
@@ -41,8 +47,9 @@ class KelolaProdukController extends Controller
         $kodeOtomatis = 'PM-' . str_pad($newNumber, 4, '0', STR_PAD_LEFT);
 
         $list_produk = ProdukModel::all();
+        $list_user = User::all();
 
-        return view('KelolaProduk.produkMasuk', compact('dataProdukMasuk', 'kodeOtomatis', 'list_produk'));
+        return view('KelolaProduk.produkMasuk', compact('dataProdukMasuk', 'kodeOtomatis', 'list_produk', 'list_user'));
 
     }
 
@@ -66,7 +73,7 @@ class KelolaProdukController extends Controller
             'keterangan' => $request->keterangan,
             'kedaluwarsa_produk_kelola' => $request->kedaluwarsa_produk_kelola,
             'jenis_pencatatan' => 'pemasukan_produk',
-            //'id_user' => auth()->user()->id_user ?? 'ADM-001', // bisa disesuaikan
+            'id_user' => session('id_user'),
         ]);
 
         return redirect('/kelolaprodukmasuk')->with('success', 'Data produk masuk berhasil disimpan.');
@@ -85,6 +92,38 @@ class KelolaProdukController extends Controller
 
 
 
+    public function filterProdukMasuk(Request $request)
+    {
+
+
+        $query = KelolaProdukModel::with('produk') // relasi ke model Produk
+            ->where('jenis_pencatatan', 'pemasukan_produk');
+
+        if ($request->nama_produk) {
+            $query->whereHas('produk', function ($q) use ($request) {
+                $q->where('nama_produk', 'like', '%' . $request->nama_produk . '%');
+            });
+        }
+
+        if ($request->tanggal) {
+            $query->whereDate('created_at', '=', $request->tanggal);
+        }
+
+        $data = $query->get();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
+
+
+
+
+
+
+
+
     public function produk_keluar()
     {
         $dataProdukKeluar = KelolaProdukModel::select(
@@ -97,9 +136,10 @@ class KelolaProdukController extends Controller
             'mengelola_produk.created_at',
             'mengelola_produk.updated_at',
             'produk.nama_produk',
-            'produk.satuan'
-            //'id_user',
+            'produk.satuan',
+            'user.id_user',
         )->join('produk', 'produk.id_produk', '=', 'mengelola_produk.id_produk')
+            ->join('user', 'user.id_user', '=', 'mengelola_produk.id_user')
             ->where('jenis_pencatatan', 'pengeluaran_produk')
             ->get();
 
@@ -115,7 +155,8 @@ class KelolaProdukController extends Controller
 
         // Ambil semua produk untuk select option
         $list_produk = ProdukModel::all();
-        return view('KelolaProduk.produkKeluar', compact('dataProdukKeluar', 'kodeOtomatis', 'list_produk'));
+        $list_user = User::all();
+        return view('KelolaProduk.produkKeluar', compact('dataProdukKeluar', 'kodeOtomatis', 'list_produk', 'list_user'));
 
     }
 
@@ -136,11 +177,22 @@ class KelolaProdukController extends Controller
             'keterangan' => $request->keterangan,
             'kedaluwarsa_produk_kelola' => $request->kedaluwarsa_produk_kelola,
             'jenis_pencatatan' => 'pengeluaran_produk',
-            'id_user' => 'ADM-001', // Ganti sesuai user login
+            'id_user' => session('id_user'),
         ]);
 
         return redirect('/kelolaprodukkeluar')->with('success', 'Data produk keluar berhasil disimpan.');
     }
+
+    public function getPencatatanTerbaru()
+    {
+        $data = KelolaProdukModel::with('produk')
+            ->orderBy('created_at', 'desc')
+            ->limit(10)
+            ->get();
+
+        return $data;
+    }
+
 
 
 

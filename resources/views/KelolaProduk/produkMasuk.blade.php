@@ -20,23 +20,64 @@
                         </a>
                     </div>
                 </div>
+                <!-- <div class="row mb-3">
+                                                                        <div class="col-md-3">
+                                                                            <label>Nama Produk</label>
+                                                                            <input type="text" id="filter_nama_produk" class="form-control" placeholder="Contoh: Gula">
+                                                                        </div>
+
+                                                                        <div class="col-md-3">
+                                                                            <label>Tanggal Awal</label>
+                                                                            <input type="date" id="filter_tanggal_awal" class="form-control">
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <label>Tanggal Pencatatan</label>
+                                                                            <input type="date" class="form-control" id="filter_tanggal" placeholder="Tanggal Pencatatan">
+                                                                        </div>
+
+                                                                        <div class="col-md-3 pt-4">
+                                                                            <button class="btn btn-damava" id="btnFilter">Filter</button>
+                                                                        </div>
+                                                                    </div> -->
+
+                <form id="formFilterProdukMasuk" class="row mb-3 formFilterProdukMasuk">
+                    <div class="col-md-3">
+                        <label>Nama Produk</label>
+                        <input type="text" class="form-control" id="filter_nama_produk" placeholder="Contoh: Gula">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Tanggal Pencatatan</label>
+                        <input type="date" class="form-control" id="filter_tanggal">
+                    </div>
+                    <div class="col-md-3 pt-4 btnFilter" id="btnFilter">
+                        <button type="button" class="btn btn-damava mt-2" >
+                            <i class="fas fa-search"></i> Cari
+                        </button>
+                    </div>
+                </form>
+
+
+
+
+
 
                 @include('KelolaProduk.formProdukMasuk')
 
                 <div style="max-height: 400px; overflow-y: auto;">
-                    <table class="table table-bordered table-striped text-center" width="100%" cellspacing="0">
+                    <table class="table table-bordered table-striped text-center" width="100%" cellspacing="0" id="tabel-produk">
                         <thead style="background-color: #99627A; color: white;">
                             <tr>
                                 <th>No.</th>
                                 <th>ID Produk Masuk</th>
-                                <th>ID Produk</th>
+                                <th>Nama Produk</th>
                                 <th>Jumlah</th>
                                 <th>Keterangan</th>
                                 <th>Kadaluarsa</th>
+                                <th>Status Kadaluarsa</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody-produk-masuk">
                             @php $total = 0; @endphp
                             @foreach ($dataProdukMasuk as $index => $produk)
                                 @if ($produk->jenis_pencatatan == 'pemasukan_produk')
@@ -44,11 +85,30 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $produk->id_kelola_pr }}</td>
-                                        <td>{{ $produk->id_produk }}</td>
+                                        <td>{{ $produk->nama_produk }}</td>
                                         <td>{{ $produk->jumlah_produk }}</td>
                                         <td>{{ $produk->keterangan }}</td>
                                         <td>{{ $produk->kedaluwarsa_produk_kelola ? \Carbon\Carbon::parse($produk->kedaluwarsa_produk_kelola)->format('d/m/Y') : '-' }}
                                         </td>
+                                        <!--status kedaluwarsa-->
+                                        <td class="text-white">
+                                            @php
+                                                $kadaluarsa = \Carbon\Carbon::parse($produk->kedaluwarsa_produk_kelola);
+                                                $hariIni = \Carbon\Carbon::now();
+                                                $selisihHari = $hariIni->diffInDays($kadaluarsa, false);
+                                            @endphp
+
+
+                                            @if ($selisihHari < 0)
+                                                <span class="badge bg-danger">Kedaluwarsa</span>
+                                            @elseif ($selisihHari < 7)
+                                                <span class="badge bg-warning text-white">Hampir Kedaluwarsa</span>
+                                            @else
+                                                <span class="badge bg-success">Belum Kedaluwarsa</span>
+                                            @endif
+                                        </td>
+
+
                                         <td>
                                             <a href="#" class="btn btn-info btn-sm shadow-sm" data-bs-toggle="modal"
                                                 data-bs-target="#detailProdukMasukModal{{ $produk->id_kelola_pr }}">
@@ -96,17 +156,17 @@
                                                                     <td>{{ $produk->keterangan }}</td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>kadaluarsa</td>
+                                                                    <td>kedaluwarsa</td>
                                                                     <td>{{ $produk->kedaluwarsa_produk_kelola ? \Carbon\Carbon::parse($produk->kedaluwarsa_produk_kelola)->format('d/m/Y') : '-' }}
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>Created At</td>
+                                                                    <td>Tanggal Pencatatan</td>
                                                                     <td>{{ $produk->created_at ? $produk->created_at->format('d/m/Y') : '-' }}
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td>Updated At</td>
+                                                                    <td>Terakhir Diubah</td>
                                                                     <td>{{ $produk->updated_at ? $produk->updated_at->format('d/m/Y') : '-' }}
                                                                     </td>
                                                                 </tr>
@@ -132,9 +192,10 @@
                             <tr>
                                 <td colspan="3"><strong>Total</strong></td>
                                 <td><strong>{{ $total }}</strong></td>
-                                <td colspan="3"></td>
+                                <td colspan="4"></td>
                             </tr>
                         </tbody>
+
                     </table>
                 </div>
 
@@ -146,3 +207,151 @@
     </div>
 @endsection
 
+
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#btnFilter').click( function () {
+        var nama_produk = $('#filter_nama_produk').val();
+        var tanggal = $('#filter_tanggal').val();
+
+        $.ajax({
+            url: '{{ url("/produk-masuk/filter") }}',
+            type: 'GET',
+            data: {
+                nama_produk: nama_produk,
+                tanggal: tanggal
+            },
+            success: function (response) {
+                let rows = '';
+                let total = 0;
+                let no = 1;
+
+                if (response.status === 'success') {
+                    if (response.data.length > 0) {
+                        $.each(response.data, function (index, item) {
+                            total += parseInt(item.jumlah_produk);
+
+                            let status = '-';
+                            if (item.kedaluwarsa_produk_kelola) {
+                                let expired = new Date(item.kedaluwarsa_produk_kelola);
+                                let now = new Date();
+                                let diff = (expired - now) / (1000 * 60 * 60 * 24);
+
+                                if (diff < 0) {
+                                    status = '<span class="badge bg-danger text-white">Kedaluwarsa</span>'
+                                } else if(diff < 7){
+                                    status = '<span class="badge bg-warning text-white">Hampir Kedaluwarsa</span>'
+                                }    else {
+                                    status = '<span class="badge bg-success text-white">Belum Kedaluwarsa</span>'
+                                }
+                            }
+
+                                    rows += `<tr>
+                                        <td>${no++}</td>
+                                        <td>${item.id_kelola_pr}</td>
+                                        <td>${item.produk?.nama_produk ?? '-'}</td>
+                                        <td>${item.jumlah_produk}</td>
+                                        <td>${item.keterangan ?? '-'}</td>
+                                        <td>${item.kedaluwarsa_produk_kelola ?  moment(item.kedaluwarsa_produk_kelola).format('DD/MM/YYYY')  : '-'}</td >
+                                        <td>${status}</td>
+                                        <td>
+                                                <a href="#" class="btn btn-info btn-sm shadow-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#detailProdukMasukModal${item.id_kelola_pr}">
+                                                    <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail
+                                                </a>
+
+                                                <!-- Modal Detail -->
+                                                <div class="modal fade" id="detailProdukMasukModal${ item.id_kelola_pr }"
+                                                    tabindex="-1" aria-labelledby="modalLabel${ item.id_kelola_pr }"
+                                                    aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="modalLabel${ item.id_produk }">Detail
+                                                                    Produk Masuk</h5>
+                                                                <button type="button" class="close" data-bs-dismiss="modal"
+                                                                    aria-label="Tutup">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <table class="table table-bordered">
+                                                                    <tr>
+                                                                        <td>ID Kelola Produk</td>
+                                                                        <td>${ item.id_kelola_pr }</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>ID Produk</td>
+                                                                        <td>${ item.id_produk }</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Nama Produk</td>
+                                                                        <td>${ item.produk.nama_produk }</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Satuan</td>
+                                                                        <td>${ item.produk.satuan }</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Jumlah</td>
+                                                                        <td>${ item.jumlah_produk }</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Keterangan</td>
+                                                                        <td>${ item.keterangan }</td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>kedaluwarsa</td>
+                                                                        <td>${ item.kedaluwarsa_produk_kelola ?  moment(item.kedaluwarsa_produk_kelola).format('DD/MM/YYYY') : '-' }
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Tanggal Pencatatan</td>
+                                                                        <td>${ item.created_at ? moment(item.created_at).format('DD/MM/YYYY') : '-' }
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>Terakhir Diubah</td>
+                                                                        <td>${ item.updated_at ? moment(item.updated_at).format('DD/MM/YYYY')  : '-' }
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td>ID User</td>
+                                                                        <td>${ item.id_user ?? '-' }</td>
+                                                                    </tr>
+                                                                </table>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-bs-dismiss="modal">Tutup</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- Modal Detail End -->
+                                            </td>
+                                    </tr > `;
+                            });
+
+                rows += `< tr >
+                                    <td colspan="3"><strong>Total</strong></td>
+                                    <td><strong>${total}</strong></td>
+                                    <td colspan="3"></td>
+                                </tr > `;
+            } else {
+                rows = `< tr > <td colspan="7" class="text-center">Tidak ada data ditemukan.</td></tr >`;
+            }
+
+                            $('#tabel-produk tbody').html(rows);
+                        }
+                    },
+            error: function () {
+                alert('Gagal mengambil data.');
+            }
+                });
+            });
+</script>
+@endpush

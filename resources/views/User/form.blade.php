@@ -9,42 +9,42 @@
             </div>
             <div class="modal-body">
                 <!-- Form tambah data bisa ditaruh di sini -->
-                <form action="{{ url('bahan/create') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('register') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <table>
                         <tr>
                             <td>ID User</td>
                             <td>:</td>
                             <td>
-                                <input type="text" name="id_bahan" id="id_bahan" value="">
+                                <input type="text" name="id_user" id="id_user" class="form-control" required >
                             </td>
                         </tr>
                         <tr>
                             <td>Email</td>
                             <td>:</td>
                             <td>
-                                <input type="text" name="nama_bahan" id="nama_bahan" value="">
+                                <input type="email" name="email" id="email" class="form-control" required>
                             </td>
                         </tr>
                         <tr>
                             <td>Username</td>
                             <td>:</td>
                             <td>
-                                <input type="text" name="username" id="username" value="">
+                                <input type="text" name="username" id="username" class="form-control" required>
                             </td>
                         </tr>
                         <tr>
                             <td>Password</td>
                             <td>:</td>
                             <td>
-                                <input type="text" name="stok_produk" id="stok_produk" value="">
+                                <input type="password" name="password" id="password" class="form-control" required>
                             </td>
                         </tr>
                         <tr>
                             <td>Level User</td>
                             <td>:</td>
                             <td>
-                                <select name="satuan" id="satuan" class="form-control" required>
+                                <select name="level_user" id="level_user" class="form-control" required>
                                     <option value="">-- Pilih Level --</option>
                                     <option value="Admin">Admin</option>
                                     <option value="Gudang">Gudang</option>
@@ -54,8 +54,8 @@
                         </tr>
                     </table>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tutup</button>
-                        <button class="btn btn-secondary" type="submit" value="">Tambah</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                        <button class="btn btn-damava" type="submit" >Tambah</button>
                     </div>
                 </form>
             </div>

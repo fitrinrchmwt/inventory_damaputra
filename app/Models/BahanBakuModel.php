@@ -17,7 +17,16 @@ class BahanBakuModel extends Model
           'satuan',
           'stok_bahan',
           //'kedaluwarsa_bahan',
-          //id_user
+          'id_user',
           
      ];
+
+     public function user()
+     {
+          return $this->belongsTo(User::class, 'id_user','id_user');
+     }
+
+     
 }
+
+

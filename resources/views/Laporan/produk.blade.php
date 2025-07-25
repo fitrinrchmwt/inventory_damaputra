@@ -3,97 +3,193 @@
 @section('title', 'Laporan Produk')
 
 @section('content')
-
-<!-- Begin Page Content -->
 <div class="container-fluid">
-
-    <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Laporan Produk</h1>
-                    
 
-    <!-- Main Content -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold" style="color: #5b2a3d;">Data Pencatatan</h6>
-        </div>      
-                        
-        
+        </div>
+
         <div class="card-body">
-            <!-- Data Table -->
             <div class="table-responsive">
-                <!-- Tambah Pencatatan -->
-                <div class="row">
-                    <div class="col-sm-12 col-md-6">
-                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-damava shadow-sm" style="padding: 10px; margin-bottom: 10px;" data-bs-toggle="modal" data-bs-target="#UserModal">
-                            <i class="fas fa-download fa-sm text-white-50"></i> Download Laporan
-                        </a>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <a href="{{ url('/laporan-produk/excel') }}" class="btn btn-sm btn-success" id="btnDownloadExcel">Download Excel</a>
+                        <a href="{{ url('/laporan-produk/pdf') }}" class="btn btn-sm btn-danger" id="btnDownloadPDF">Download PDF</a>
+
                     </div>
                 </div>
-                
 
-                <!-- search -->
-                <div class="d-sm-inline-block m-3" >
-                   <select name="satuan" id="satuan" class="form-control" required>
-                        <option value="">-- Jenis Pencatatan --</option>
-                        <option value="">Semua</option>
-                        <option value="">Produk Masuk</option>
-                        <option value="">Produk Keluar</option>
-                    </select>
-                </div>
-                <div class="d-sm-inline-block m-3" >
-                   <select name="satuan" id="satuan" class="form-control" required>
-                        <option value="">-- ID Produk --</option>
-                        <option value="">Semua</option>
-                        <option value="">PR-001</option>
-                        <option value="">PR-002</option>
-                    </select>
-                </div>
-                <div class="d-sm-inline-block m-3" >
-                   <input type="date" name="tanggalmulai" class="form-control" placeholder="Tanggal Mulai">
-                </div>
-                /
-                <div class="d-sm-inline-block" >
-                    <input type="date" name="tanggalakhir" class="form-control" placeholder="Tanggal Akhir">
+                <div class="row mb-3">
+                    <div class="col-md-2">
+                        <select id="jenis_pencatatan" class="form-control">
+                            <option value="semua">-- Jenis Pencatatan --</option>
+                            @foreach($produk_jenispencatatan as $jp)
+                                <option value="{{ $jp }}">{{ ucwords(str_replace('_', ' ', $jp)) }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select id="id_produk" class="form-control">
+                            <option value="semua">-- ID Produk --</option>
+                            @foreach($listproduk as $produk)
+                                <option value="{{ $produk->id_produk }}">{{ $produk->id_produk }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" id="tanggal_awal" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <input type="date" id="tanggal_akhir" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <button id="btnFilter" class="btn btn-damava">Filter</button>
+                    </div>
                 </div>
 
-                <!-- Table -->
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                <table class="table table-bordered table-striped text-center" id="tableLaporan" width="100%" cellspacing="0">
+                    
+                    <thead style="background-color: #99627A; color: white;">
                         <tr>
                             <th>No.</th>
-                            <th>Id Pencatatan</th>
+                            <th>Id Kelola Produk</th>
                             <th>Tanggal</th>
-                            <th>ID Produk</th>
+                            <th>Nama Produk</th>
                             <th>Jumlah</th>
-                            <th>Keterangan</th>
+                            <th>Jenis Pencatatan</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="laporan_produk_body">
+                        @foreach($data_laporan as $no=> $mengelola_produk)
                         <tr>
-                            <td>1</td>
-                            <td>PM-001</td>
-                            <td>16/06/2025</td>
-                            <td>PR-001</td>
-                            <td class="highlight">10</td>
-                            <td>Retur Toko Bunga</td>
+                            <td>{{$no + 1}}</td>
+                            <td>{{$mengelola_produk->id_kelola_pr}}</td>
+                            <td>{{$mengelola_produk->tanggal}}</td>
+                            <td>{{$mengelola_produk->nama_produk}}</td>
+                            <td>{{$mengelola_produk->jumlah}}</td>
+                            <td>{{$mengelola_produk->jenis_pencatatan}}</td>
                         </tr>
+                        @endforeach
                         <tr>
-                            <td colspan=""><strong>Total</strong></td>
-                            <td colspan=""></td>
-                            <td colspan=""></td>
-                            <td class="">10</td>
-                            <td colspan=""></td>
-                            <td colspan=""></td>
-                        </tr>      
+                            <td colspan="4"><strong>Total</strong></td>
+                            <td>{{$totalJumlah}}</td>
+                            <td></td>
+                        </tr>
                     </tbody>
-                </table>                            
+                </table>
+
+               
+
             </div>
-            
         </div>
     </div>
-
 </div>
 <!-- /.container-fluid -->
 
 
 @endsection
+
+@push('scripts')
+<script>
+    function loadLaporanProduk() {
+        let jenis_pencatatan = $('#jenis_pencatatan').val();
+        let id_produk = $('#id_produk').val();
+        let tanggal_awal = $('#tanggal_awal').val();
+        let tanggal_akhir = $('#tanggal_akhir').val();
+
+        $.ajax({
+            url: "{{ url('/rekap-produk') }}",
+            method: "GET",
+            data: {
+                jenis_pencatatan,
+                id_produk,
+                tanggal_awal,
+                tanggal_akhir
+            },
+            success: function (res) {
+                let html = '';
+                let total = 0;
+
+                if (res.data.length === 0) {
+                    html = `<tr><td colspan="6" class="text-center">Tidak ada data</td></tr>`;
+                } else {
+                    $.each(res.data, function (i, item) {
+                        html += `
+                            <tr>
+                                <td>${i + 1}</td>
+                                <td>${item.id_kelola_pr}</td>
+                                <td>${item.tanggal}</td>
+                                <td>${item.nama_produk}</td>
+                                <td>${item.jumlah}</td>
+                                <td>${item.jenis_pencatatan}</td>
+                            </tr>
+                        `;
+                        total += parseInt(item.jumlah);
+                    });
+
+                    html += `
+                        <tr>
+                            <td colspan="4"><strong>Total</strong></td>
+                            <td>${total}</td>
+                            <td></td>
+                        </tr>
+                    `;
+                }
+
+                $('#tableLaporan tbody').html(html);
+            },
+            error: function () {
+                alert('Gagal memuat data!');
+            }
+        });
+    }
+
+    $(document).ready(function () {
+
+
+        $('#btnFilter').on('click', function () {
+            loadLaporanProduk(); // Load ulang saat filter diklik
+        });
+    });
+</script>
+@endpush
+
+@push('scripts')
+<script>
+    function updateDownloadLinks() {
+        const jenis_pencatatan = $('#jenis_pencatatan').val();
+        const id_produk = $('#id_produk').val();
+        const tanggal_awal = $('#tanggal_awal').val();
+        const tanggal_akhir = $('#tanggal_akhir').val();
+
+        const params = new URLSearchParams({
+            jenis_pencatatan,
+            id_produk,
+            tanggal_awal,
+            tanggal_akhir
+        }).toString();
+
+        $('#btnDownloadExcel').attr('href', "{{ url('/laporan-produk/excel') }}" + '?' + params);
+        $('#btnDownloadPDF').attr('href', "{{ url('/laporan-produk/pdf') }}" + '?' + params);
+    }
+
+    $(document).ready(function () {
+        // Update link saat halaman dimuat
+        updateDownloadLinks();
+
+        // Update link saat tombol filter diklik
+        $('#btnFilter').on('click', function () {
+            updateDownloadLinks();
+        });
+
+        //  Update saat select berubah
+        $('#jenis_pencatatan, #id_produk, #tanggal_awal, #tanggal_akhir').on('change', function () {
+            updateDownloadLinks();
+        });
+    });
+</script>
+@endpush
+

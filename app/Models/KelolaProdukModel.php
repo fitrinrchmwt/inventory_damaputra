@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class KelolaProdukModel extends Model
 {
-    protected $table = 'mengelola_produk';
+     protected $table = 'mengelola_produk';
      protected $primaryKey = 'id_kelola_pr';
      public $incrementing = false;
      public $keyType = 'string';
@@ -19,7 +19,19 @@ class KelolaProdukModel extends Model
           'jumlah_produk',
           'keterangan',
           'kedaluwarsa_produk_kelola',
-          //'id_user',
+          'id_user',
 
      ];
+
+     public function user()
+     {
+          return $this->belongsTo(User::class, 'id_user', 'id_user');
+     }
+
+     public function produk()
+     {
+          return $this->belongsTo(ProdukModel::class, 'id_produk');
+     }
+
+
 }

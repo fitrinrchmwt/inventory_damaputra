@@ -19,6 +19,16 @@
                         
         
         <div class="card-body">
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if (session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
             <!-- Data Table -->
             <div class="table-responsive">
                 <!-- Tambah Pencatatan -->
@@ -38,8 +48,8 @@
 
                 
                 <!-- Table -->
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
+                <table class="table table-bordered table-striped text-center" id="dataTable" width="100%" cellspacing="0">
+                    <thead style="background-color: #99627A; color: white;">
                         <tr>
                             <th>No.</th>
                             <th>ID User</th>
@@ -48,20 +58,44 @@
                             <th>Opsi</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="text-center">
+                        @foreach($users as $no => $user)
                         <tr>
-                            <td>1</td>
-                            <td>ADM-001</td>
-                            <td>admin01@gmail.com</td>
-                            <td >Admin1</td>
-                            <td width="35%"><a href="#" class="d-none d-sm-inline-block btn btn-info shadow-sm" data-bs-toggle="modal" data-bs-target="#detailUserModal">
-                            <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail</a> | <a href="#" class="d-none d-sm-inline-block btn btn-warning shadow-sm" data-bs-toggle="modal" data-bs-target="#editUserModal">
-                            <i class="fas fa-edit fa-sm text-white-50"></i> Edit</a> | 
-                            <a href="javascript:void(0);" onclick="hapusData('123')" class="d-none d-sm-inline-block btn btn-danger shadow-sm">
-                            <i class="fas fa-trash-alt fa-sm text-white-50"></i> Hapus
-                            </a></td>
-                            
-                        </tr>     
+                            <td>{{ $no + 1 }}</td>
+                            <td>{{ $user->id_user }}</td>
+                            <td>{{ $user->email }}</td>
+                            <td>{{ $user->username }}</td>
+                            <td width="35%">
+                                <a href="#"
+                                class="btn btn-info btn-sm shadow-sm"
+                                data-bs-toggle="modal"
+                                data-bs-target="#detailUserModal"
+                                data-id="{{ $user->id_user }}"
+                                data-email="{{ $user->email }}"
+                                data-username="{{ $user->username }}"
+                                data-level="{{ $user->level_user }}"
+                                data-created="{{ $user->created_at }}"
+                                data-updated="{{ $user->updated_at }}">
+                                <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail
+                                </a>
+                                    |
+                                <a href="#" class="btn btn-warning btn-sm shadow-sm edit-product-btn"
+                                data-bs-toggle="modal" data-bs-target="#editUserModal"
+                                data-id="{{ $user->id_user }}"
+                                data-email="{{ $user->email }}"
+                                data-username="{{ $user->username }}"
+                                data-level="{{ $user->level_user }}">
+                                <i class="fas fa-edit fa-sm text-white-50"></i> Edit
+                                </a> |
+                                <form action="{{ url ('user/delete/' . $user->id_user) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Apakah Anda yakin ingin menghapus user ini?');">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm shadow-sm edit-product-btn">
+                                        <i class="fas fa-trash-alt fa-sm text-white-50"></i> Hapus</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach     
                     </tbody>
                 </table>
                 <!-- Modal Detail Start -->
@@ -81,4 +115,34 @@
 <!-- /.container-fluid -->
 
 
+
+
+@endsection
+@section('script')
+
+<script>
+    const detailModal = document.getElementById('detailUserModal');
+    detailModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+
+        document.getElementById('user-modal-id_user').textContent = button.getAttribute('data-id');
+        document.getElementById('user-modal-email').textContent = button.getAttribute('data-email');
+        document.getElementById('user-modal-username').textContent = button.getAttribute('data-username');
+        document.getElementById('user-modal-level').textContent = button.getAttribute('data-level');
+        document.getElementById('user-modal-created').textContent = button.getAttribute('data-created');
+        document.getElementById('user-modal-updated').textContent = button.getAttribute('data-updated');
+    });
+</script>
+
+<script>
+    const editModal = document.getElementById('editUserModal');
+    editModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+
+        document.getElementById('edit-id_user').value = button.getAttribute('data-id');
+        document.getElementById('edit-email').value = button.getAttribute('data-email');
+        document.getElementById('edit-username').value = button.getAttribute('data-username');
+        document.getElementById('edit-level_user').value = button.getAttribute('data-level');
+    });
+</script>
 @endsection

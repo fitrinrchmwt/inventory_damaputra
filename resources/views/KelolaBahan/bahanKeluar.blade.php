@@ -29,10 +29,9 @@
                             <tr>
                                 <th>No.</th>
                                 <th>ID Bahan Keluar</th>
-                                <th>ID Bahan</th>
+                                <th>Nama Bahan</th>
                                 <th>Jumlah</th>
                                 <th>Keterangan</th>
-                                <th>Kadaluarsa</th>
                                 <th>Opsi</th>
                             </tr>
                         </thead>
@@ -44,7 +43,7 @@
                                     <tr>
                                         <td>{{ $index + 1 }}</td>
                                         <td>{{ $bahan->id_kelola_bb }}</td>
-                                        <td>{{ $bahan->id_bahan }}</td>
+                                        <td>{{ $bahan->nama_bahan }}</td>
                                         <td>{{ $bahan->jumlah_bahan }}</td>
                                         <td>{{ $bahan->keterangan }}</td>
                                         <td>{{ $bahan->kedaluwarsa_bahan_kelola ? \Carbon\Carbon::parse($bahan->kedaluwarsa_bahan_kelola)->format('d/m/Y') : '-' }}
@@ -61,10 +60,8 @@
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="modalLabel{{ $bahan->id_bahan }}">Detail
-                                                                Bahan Keluar</h5>
-                                                            <button type="button" class="close" data-bs-dismiss="modal"
-                                                                aria-label="Tutup">
+                                                            <h5 class="modal-title" id="modalLabel{{ $bahan->id_bahan }}">Detail Bahan Keluar</h5>
+                                                            <button type="button" class="close" data-bs-dismiss="modal"aria-label="Tutup">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </div>
@@ -93,11 +90,6 @@
                                                                 <tr>
                                                                     <td>Keterangan</td>
                                                                     <td>{{ $bahan->keterangan }}</td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>kadaluarsa</td>
-                                                                    <td>{{ $bahan->kedaluwarsa_bahan_kelola ? \Carbon\Carbon::parse($bahan->kedaluwarsa_bahan_kelola)->format('d/m/Y') : '-' }}
-                                                                    </td>
                                                                 </tr>
                                                                 <tr>
                                                                     <td>Created At</td>

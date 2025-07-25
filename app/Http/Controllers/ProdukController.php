@@ -38,7 +38,7 @@ class ProdukController extends Controller
             'nama_produk' => $request->nama_produk,
             'satuan' => $request->satuan,
             'stok_produk' => $request->stok_produk,
-            //id_user
+            'id_user' => session('id_user'),
         ]);
 
         return redirect('/produk')->with('success', 'Produk berhasil ditambahkan!');

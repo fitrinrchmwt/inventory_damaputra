@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class KelolaBahanModel extends Model
 {
-    protected $table = 'mengelola_bahan';
+     protected $table = 'mengelola_bahan';
      protected $primaryKey = 'id_kelola_bb';
      public $incrementing = false;
      public $keyType = 'string';
@@ -19,7 +19,13 @@ class KelolaBahanModel extends Model
           'jumlah_bahan',
           'keterangan',
           'kedaluwarsa_bahan_kelola',
-          //'id_user',
+          'id_user',
 
      ];
+
+     public function bahanbaku()
+     {
+          return $this->belongsTo(BahanBakuModel::class, 'id_bahan');
+     }
+
 }

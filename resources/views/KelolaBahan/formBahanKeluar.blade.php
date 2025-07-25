@@ -3,7 +3,7 @@
         <form action="{{ url('/bahankeluar/create') }}" method="POST" enctype="multipart/form-data"
             class="modal-content">
             @csrf
-            <input type="hidden" name="jenis_pencatatan" value="penggunaan_bahan">
+            <input type="hidden" name="jenis_pencatatan" value="penggunaan_bahanbaku">
 
             <div class="modal-header">
                 <h5 class="modal-title">Tambah Pencatatan Bahan Keluar</h5>
@@ -13,7 +13,7 @@
             <div class="modal-body">
                 <div class="form-group mb-2">
                     <label>ID Kelola Bahan</label>
-                    <input type="text" name="id_kelola_pr" class="form-control" value="{{ $kodeOtomatis }}" readonly>
+                    <input type="text" name="id_kelola_bb" class="form-control" value="{{ $kodeOtomatis }}" readonly>
                 </div>
 
                 <!-- ID Bahan -->
@@ -50,11 +50,6 @@
                 <div class="form-group mb-2">
                     <label>Keterangan</label>
                     <input type="text" name="keterangan" class="form-control">
-                </div>
-
-                <div class="form-group mb-2">
-                    <label>Kadaluarsa</label>
-                    <input type="date" name="kedaluwarsa_bahan_kelola" class="form-control">
                 </div>
 
                 <input type="hidden" name="id_user" value="ADM-001"> {{-- ganti dengan user login --}}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\KelolaBahanModel;
 use App\Models\BahanBakuModel;
+use App\Models\User;
 
 class KelolaBahanController extends Controller
 {
@@ -20,10 +21,11 @@ class KelolaBahanController extends Controller
             'mengelola_bahan.created_at',
             'mengelola_bahan.updated_at',
             'bahanbaku.nama_bahan',
-            'bahanbaku.satuan'
-            //id_user
+            'bahanbaku.satuan',
+            'user.id_user',
         )
             ->join('bahanbaku', 'bahanbaku.id_bahan', '=', 'mengelola_bahan.id_bahan')
+            ->join('user', 'user.id_user', '=', 'mengelola_bahan.id_user')
             ->where('jenis_pencatatan', 'pemasukan_bahanbaku')
             ->get();
 
@@ -35,8 +37,9 @@ class KelolaBahanController extends Controller
         $kodeOtomatis = 'BM-' . str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
         
         $list_bahan = BahanBakuModel::all();
+        $list_user = User::all();
 
-        return view('KelolaBahan.bahanMasuk', compact('dataBahanMasuk', 'kodeOtomatis', 'list_bahan'));
+        return view('KelolaBahan.bahanMasuk', compact('dataBahanMasuk', 'kodeOtomatis', 'list_bahan', 'list_user'));
     }
 
     public function tambah_bahan_masuk(Request $request)
@@ -46,7 +49,7 @@ class KelolaBahanController extends Controller
             'id_bahan' => 'required|exists:bahanbaku,id_bahan',
             'jumlah_bahan' => 'required|integer|min:1',
             'keterangan' => 'nullable|string|max:255',
-            'kedaluwarsa_bahan_kelola' => 'nullable|date',
+            'kedaluwarsa_bahan_kelola' => 'required|date',
         ]);
 
         KelolaBahanModel::create([
@@ -56,7 +59,7 @@ class KelolaBahanController extends Controller
             'keterangan' => $request->keterangan,
             'kedaluwarsa_bahan_kelola' => $request->kedaluwarsa_bahan_kelola,
             'jenis_pencatatan' => 'pemasukan_bahanbaku',
-            //'id_user' => $request->id_user ?? 'ADM-001',
+            'id_user' => session('id_user'),
         ]);
 
         return redirect('/kelolabahanmasuk')->with('success', 'Data bahan masuk berhasil disimpan.');
@@ -74,9 +77,11 @@ class KelolaBahanController extends Controller
             'mengelola_bahan.created_at',
             'mengelola_bahan.updated_at',
             'bahanbaku.nama_bahan',
-            'bahanbaku.satuan'
+            'bahanbaku.satuan',
+            'user.id_user',
         )
             ->join('bahanbaku', 'bahanbaku.id_bahan', '=', 'mengelola_bahan.id_bahan')
+            ->join('user', 'user.id_user', '=', 'mengelola_bahan.id_user')
             ->where('jenis_pencatatan', 'pengeluaran_bahanbaku')
             ->get();
 
@@ -88,8 +93,9 @@ class KelolaBahanController extends Controller
         $kodeOtomatis = 'BK-' . str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
 
         $list_bahan = BahanBakuModel::all();
+        $list_user = User::all();
 
-        return view('KelolaBahan.bahanKeluar', compact('dataBahanKeluar', 'kodeOtomatis', 'list_bahan'));
+        return view('KelolaBahan.bahanKeluar', compact('dataBahanKeluar', 'kodeOtomatis', 'list_bahan', 'list_user'));
     }
 
     public function tambah_bahan_keluar(Request $request)
@@ -109,7 +115,7 @@ class KelolaBahanController extends Controller
             'keterangan' => $request->keterangan,
             'kedaluwarsa_bahan_kelola' => $request->kedaluwarsa_bahan_kelola,
             'jenis_pencatatan' => 'pengeluaran_bahanbaku',
-            //'id_user' => $request->id_user ?? 'ADM-001',
+            'id_user' => session('id_user'),
         ]);
 
         return redirect('/kelolabahankeluar')->with('success', 'Data bahan keluar berhasil disimpan.');
