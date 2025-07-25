@@ -260,17 +260,17 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td>kedaluwarsa</td>
-                                                                        <td>${ item.kedaluwarsa_produk_kelola ?  moment(item.kedaluwarsa_produk_kelola).format('DD/MM/YYYY') : '-' }
+                                                                        <td>${ item.kedaluwarsa_produk_kelola ?  moment.utc(item.kedaluwarsa_produk_kelola).format('DD/MM/YYYY') : '-' }
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>Tanggal Pencatatan</td>
-                                                                        <td>${ item.created_at ? moment(item.created_at).format('DD/MM/YYYY') : '-' }
+                                                                        <td>${ item.created_at ? moment.utc(item.created_at).format('DD/MM/YYYY') : '-' }
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>Terakhir Diubah</td>
-                                                                        <td>${ item.updated_at ? moment(item.updated_at).format('DD/MM/YYYY')  : '-' }
+                                                                        <td>${ item.updated_at ? moment.utc(item.updated_at).format('DD/MM/YYYY')  : '-' }
                                                                         </td>
                                                                     </tr>
                                                                     <tr>

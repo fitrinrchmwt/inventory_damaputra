@@ -234,9 +234,9 @@
                                                         <tr><td>Satuan</td><td>${item.bahanbaku.satuan}</td></tr>
                                                         <tr><td>Jumlah</td><td>${item.jumlah_bahan}</td></tr>
                                                         <tr><td>Keterangan</td><td>${item.keterangan}</td></tr>
-                                                        <tr><td>Kedaluwarsa</td><td>${item.kedaluwarsa_bahan_kelola ? moment(item.kedaluwarsa_bahan_kelola).format('DD/MM/YYYY') : '-'}</td></tr>
-                                                        <tr><td>Tanggal Pencatatan</td><td>${item.created_at ? moment(item.created_at).format('DD/MM/YYYY') : '-'}</td></tr>
-                                                        <tr><td>Terakhir Diubah</td><td>${item.updated_at ? moment(item.updated_at).format('DD/MM/YYYY') : '-'}</td></tr>
+                                                        <tr><td>Kedaluwarsa</td><td>${item.kedaluwarsa_bahan_kelola ? moment.utc(item.kedaluwarsa_bahan_kelola).format('DD/MM/YYYY') : '-'}</td></tr>
+                                                        <tr><td>Tanggal Pencatatan</td><td>${item.created_at ? moment.utc(item.created_at).format('DD/MM/YYYY') : '-'}</td></tr>
+                                                        <tr><td>Terakhir Diubah</td><td>${item.updated_at ? moment.utc(item.updated_at).format('DD/MM/YYYY') : '-'}</td></tr>
                                                         <tr><td>ID User</td><td>${item.id_user ?? '-'}</td></tr>
                                                     </table>
                                                 </div>

@@ -255,7 +255,7 @@
                                         <td>${item.produk?.nama_produk ?? '-'}</td>
                                         <td>${item.jumlah_produk}</td>
                                         <td>${item.keterangan ?? '-'}</td>
-                                        <td>${item.kedaluwarsa_produk_kelola ?  moment(item.kedaluwarsa_produk_kelola).format('DD/MM/YYYY')  : '-'}</td >
+                                        <td>${item.kedaluwarsa_produk_kelola ?  moment.utc(item.kedaluwarsa_produk_kelola).format('DD/MM/YYYY')  : '-'}</td >
                                         <td>${status}</td>
                                         <td>
                                                 <a href="#" class="btn btn-info btn-sm shadow-sm" data-bs-toggle="modal"
@@ -305,17 +305,17 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td>kedaluwarsa</td>
-                                                                        <td>${ item.kedaluwarsa_produk_kelola ?  moment(item.kedaluwarsa_produk_kelola).format('DD/MM/YYYY') : '-' }
+                                                                        <td>${ item.kedaluwarsa_produk_kelola ?  moment.utc(item.kedaluwarsa_produk_kelola).format('DD/MM/YYYY') : '-' }
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>Tanggal Pencatatan</td>
-                                                                        <td>${ item.created_at ? moment(item.created_at).format('DD/MM/YYYY') : '-' }
+                                                                        <td>${ item.created_at ? moment.utc(item.created_at).format('DD/MM/YYYY') : '-' }
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>Terakhir Diubah</td>
-                                                                        <td>${ item.updated_at ? moment(item.updated_at).format('DD/MM/YYYY')  : '-' }
+                                                                        <td>${ item.updated_at ? moment.utc(item.updated_at).format('DD/MM/YYYY')  : '-' }
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
