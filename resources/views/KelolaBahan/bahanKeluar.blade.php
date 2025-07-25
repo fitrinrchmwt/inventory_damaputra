@@ -69,7 +69,7 @@
                                         <td>{{ $bahan->jumlah_bahan }}</td>
                                         <td>{{ $bahan->keterangan }}</td>
                                         <td>
-                                            <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                            <a href="#" class="btn btn-info btn-sm shadow-sm" data-bs-toggle="modal"
                                                 data-bs-target="#detailBahanKeluarModal{{ $bahan->id_kelola_bb }}">
                                                 <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail</a>
 

@@ -114,6 +114,7 @@
                                                 data-bs-target="#detailProdukMasukModal{{ $produk->id_kelola_pr }}">
                                                 <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail
                                             </a>
+                                            
 
                                             <!-- Modal Detail -->
                                             <div class="modal fade" id="detailProdukMasukModal{{ $produk->id_kelola_pr }}"
@@ -163,11 +164,6 @@
                                                                 <tr>
                                                                     <td>Tanggal Pencatatan</td>
                                                                     <td>{{ $produk->created_at ? $produk->created_at->format('d/m/Y') : '-' }}
-                                                                    </td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <td>Terakhir Diubah</td>
-                                                                    <td>{{ $produk->updated_at ? $produk->updated_at->format('d/m/Y') : '-' }}
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
@@ -313,11 +309,7 @@
                                                                         <td>${ item.created_at ? moment.utc(item.created_at).format('DD/MM/YYYY') : '-' }
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
-                                                                        <td>Terakhir Diubah</td>
-                                                                        <td>${ item.updated_at ? moment.utc(item.updated_at).format('DD/MM/YYYY')  : '-' }
-                                                                        </td>
-                                                                    </tr>
+                                                                    
                                                                     <tr>
                                                                         <td>ID User</td>
                                                                         <td>${ item.id_user ?? '-' }</td>

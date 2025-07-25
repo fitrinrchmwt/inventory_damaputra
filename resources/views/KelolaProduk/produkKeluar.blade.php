@@ -70,7 +70,7 @@
                                         <td>{{ $produk->keterangan }}</td>
                                         
                                         <td>
-                                            <a href="#" class="btn btn-info btn-sm" data-bs-toggle="modal"
+                                            <a href="#" class="btn btn-info btn-sm shadow-sm" data-bs-toggle="modal"
                                                 data-bs-target="#detailProdukKeluarModal{{ $produk->id_kelola_pr }}">
                                                 <i class="fas fa-file-alt fa-sm text-white-50"></i> Detail
                                             </a>
