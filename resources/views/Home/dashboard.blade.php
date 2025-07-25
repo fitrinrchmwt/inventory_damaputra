@@ -368,47 +368,47 @@
             <!-- /.container-fluid -->
 @endsection
 
-        @section('script')
-            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-            <script>
-                const labels = {!! json_encode($labels) !!};
-                const data = {!! json_encode($data) !!};
+@section('script')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const labels = {!! json_encode($labels) !!};
+        const data = {!! json_encode($data) !!};
 
-                if (labels.length === 0 || data.length === 0) {
-                    console.warn('Label atau data kosong, chart tidak akan dirender.');
-                } else {
-                    const ctx = document.getElementById("myAreaChart").getContext('2d');
-                    const myChart = new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                label: 'Jumlah Penjualan',
-                                data: data,
-                                backgroundColor: 'rgba(78, 115, 223, 0.2)',
-                                borderColor: 'rgba(78, 115, 223, 1)',
-                                borderWidth: 2,
-                                pointRadius: 3,
-                                pointBackgroundColor: 'rgba(78, 115, 223, 1)',
-                                pointBorderColor: 'rgba(78, 115, 223, 1)',
-                                pointHoverRadius: 5,
-                                pointHoverBackgroundColor: 'rgba(78, 115, 223, 1)',
-                                pointHoverBorderColor: 'rgba(78, 115, 223, 1)',
-                                pointHitRadius: 10,
-                                pointBorderWidth: 2,
-                                fill: true
-                            }]
-                        },
-                        options: {
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            scales: {
-                                y: {
-                                    beginAtZero: true
-                                }
-                            }
+        if (labels.length === 0 || data.length === 0) {
+            console.warn('Label atau data kosong, chart tidak akan dirender.');
+        } else {
+            const ctx = document.getElementById("myAreaChart").getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Jumlah Penjualan',
+                        data: data,
+                        backgroundColor: 'rgba(78, 115, 223, 0.2)',
+                        borderColor: 'rgba(78, 115, 223, 1)',
+                        borderWidth: 2,
+                        pointRadius: 3,
+                        pointBackgroundColor: 'rgba(78, 115, 223, 1)',
+                        pointBorderColor: 'rgba(78, 115, 223, 1)',
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: 'rgba(78, 115, 223, 1)',
+                        pointHoverBorderColor: 'rgba(78, 115, 223, 1)',
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
-                    });
+                    }
                 }
-            </script>
-        @endsection
+            });
+        }
+    </script>
+@endsection
