@@ -280,7 +280,7 @@
     <script src="{{ asset('asset/jquery-easing/jquery.easing.min.js') }}"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
+    <script src="{{ asset('asset/js/sb-admin-2.min.js') }}"></script>
 
 
     <!-- Page level plugins --><!-- buat lihat brp halaman & blm tak edit gk tau bisa gk -->
