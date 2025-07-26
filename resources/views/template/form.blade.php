@@ -36,7 +36,9 @@
         .btn-damava:hover {
             background-color: #a14d7e;
         }
-        .sidebar .nav-item .collapse .collapse-inner .collapse-item.active,.sidebar .nav-item .collapsing .collapse-inner .collapse-item.active {
+
+        .sidebar .nav-item .collapse .collapse-inner .collapse-item.active,
+        .sidebar .nav-item .collapsing .collapse-inner .collapse-item.active {
             color: #8e3f6d;
             font-weight: 700
         }
@@ -46,6 +48,32 @@
             color: #fff;
             background-color: #8e3f6d;
             border-color: #8e3f6d;
+        }
+    </style>
+
+    <style>
+        .scroll-table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .scroll-table-container table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .scroll-table-container thead th {
+            position: sticky;
+            top: 0;
+            background-color: #99627A;
+            color: white;
+            z-index: 10;
+        }
+
+        .table td,
+        .table th {
+            white-space: nowrap;
         }
     </style>
 
@@ -161,10 +189,13 @@
                     <i class="fas fa-users"></i>
                     <span>Kelola User</span>
                 </a>
-                <div id="collapseUser" class="collapse {{ Request::is('user') || Request::is('riwayat-login') ? 'show' : '' }}">
+                <div id="collapseUser"
+                    class="collapse {{ Request::is('user') || Request::is('riwayat-login') ? 'show' : '' }}">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item {{ Request::is('user') ? 'active' : '' }}" href="{{ url('user') }}">User</a>
-                        <a class="collapse-item {{ Request::is('riwayat-login') ? 'active' : '' }}" href="{{ url('riwayat-login') }}">Riwayat</a>
+                        <a class="collapse-item {{ Request::is('user') ? 'active' : '' }}"
+                            href="{{ url('user') }}">User</a>
+                        <a class="collapse-item {{ Request::is('riwayat-login') ? 'active' : '' }}"
+                            href="{{ url('riwayat-login') }}">Riwayat</a>
                     </div>
                 </div>
             </li>
@@ -199,7 +230,8 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-2x fa-user-circle"></i>
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Session::get('username') }}</span>
+                                <span
+                                    class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Session::get('username') }}</span>
                                 <i class="fas fa-angle-down"></i>
                             </a>
                             <!-- Dropdown - User Information -->
@@ -210,9 +242,8 @@
                                     Profile
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a href="{{ route('logout') }}" 
-                                class="dropdown-item"
-                                onclick="return confirm('Yakin ingin logout?')">
+                                <a href="{{ route('logout') }}" class="dropdown-item"
+                                    onclick="return confirm('Yakin ingin logout?')">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -319,7 +350,7 @@
     </script>
 
     @yield('script')
-    
+
     @stack('scripts')
 
 </body>
