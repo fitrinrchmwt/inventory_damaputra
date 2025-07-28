@@ -254,8 +254,6 @@
                                                     <td>${item.id_kelola_pr}</td>
                                                     <td>${item.produk?.nama_produk ?? '-'}</td>
                                                     <td>${item.jumlah_produk}</td>
-                                                    <td>${item.keterangan ?? '-'}</td>
-                                                    <td>${item.kedaluwarsa_produk_kelola ? moment.utc(item.kedaluwarsa_produk_kelola).format('DD/MM/YYYY') : '-'}</td >
                                                     <td>${status}</td>
                                                     <td>
                                                             <a href="#" class="btn btn-info btn-sm shadow-sm" data-bs-toggle="modal"

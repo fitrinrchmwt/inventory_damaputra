@@ -46,7 +46,7 @@
                 @include('KelolaBahan.formBahanKeluar')
 
                 <div class="scroll-table-container">
-                    <table class="table table-bordered table-striped text-center" id="tabel-produk">
+                    <table class="table table-bordered table-striped text-center" id="tabel-bahan">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -257,7 +257,7 @@
                             rows = `<tr><td colspan="7" class="text-center">Tidak ada data ditemukan.</td></tr>`;
                         }
 
-                        $('#tabel-bahankeluar tbody').html(rows);
+                        $('#tabel-bahan tbody').html(rows);
                     }
                 },
                 error: function () {

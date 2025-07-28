@@ -102,15 +102,9 @@
                                         |
 
                                         <!-- Tombol Hapus -->
-                                        <form action="{{ route('produk.delete', $produk->id_produk) }}" method="POST"
-                                            style="display:inline;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm shadow-sm edit-product-btn"
-                                                data-bs-toggle="modal" data-bs-target="#hapusProdukModal"
-                                                onclick="return confirm('Yakin ingin menghapus produk ini?')">
-                                                <i class="fas fa-trash-alt fa-sm text-white-50"></i> Hapus</button>
-                                        </form>
+                                       <button class="btn btn-danger btn-sm shadow-sm delete-product-btn" data-id="{{ $produk->id_produk }}">
+                                    <i class="fas fa-trash-alt fa-sm text-white-50"></i> Hapus
+                                </button>
 
                                         <!-- Modal Detail -->
                                         <div class="modal fade" id="detailProdukModal{{ $produk->id_produk }}" tabindex="-1"
@@ -280,7 +274,7 @@
     var updated_at = $('#filter_updated_at').val();
 
     $.ajax({
-        url: '{{ secure_url("/produk/filter") }}',
+        url: '{{ url("/produk/filter") }}',
         type: 'GET',
         data: {
             nama_produk: nama_produk,
@@ -424,7 +418,7 @@ $(document).on('click', '.detail-product-btn', function() {
 $(document).on('click', '.delete-product-btn', function() {
     var id = $(this).data('id');
     var csrf = $('meta[name="csrf-token"]').attr('content');
-    var baseUrl = "{{ secure_url('hapusproduk') }}";
+    var baseUrl = "{{ url('hapusproduk') }}";
     var url = `${baseUrl}/${id}`;
     if (confirm('Yakin ingin menghapus produk ini?')) {
         $.ajax({

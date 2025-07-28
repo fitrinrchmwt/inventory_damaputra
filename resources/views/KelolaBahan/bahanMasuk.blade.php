@@ -45,7 +45,7 @@
                 @include('KelolaBahan.formBahanMasuk')
 
                 <div class="scroll-table-container">
-                    <table class="table table-bordered table-striped text-center" id="tabel-produk">
+                    <table class="table table-bordered table-striped text-center" id="tabel-bahan">
                         <thead>
                             <tr>
                                 <th>No.</th>
@@ -200,7 +200,6 @@
                                     <td>${item.bahanbaku?.nama_bahan ?? '-'}</td>
                                     <td>${item.jumlah_bahan}</td>
                                     <td>${item.keterangan ?? '-'}</td>
-                                    <td>${item.kedaluwarsa_bahan_kelola ? moment.utc(item.kedaluwarsa_bahan_kelola).format('DD/MM/YYYY') : '-'}</td>
                                     <td>
                                         <a href="#" class="btn btn-info btn-sm shadow-sm" data-bs-toggle="modal"
                                            data-bs-target="#detailBahanMasukModal${item.id_kelola_pr}">
@@ -253,7 +252,7 @@
                             rows = `<tr><td colspan="7" class="text-center">Tidak ada data ditemukan.</td></tr>`;
                         }
 
-                        $('#tabel-bahanmasuk tbody').html(rows);
+                        $('#tabel-bahan tbody').html(rows);
                     }
                 },
                 error: function () {

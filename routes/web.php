@@ -99,3 +99,6 @@ Route::get('/bahan-keluar/filter', [KelolaBahanController::class, 'filterBahanKe
 
 Route::get('/dashboard/terbaru', [DashboardController::class, 'getTerbaru']);
 
+//pencarian data 
+Route::get( '/produk/filter', [ProdukController::class, 'filterProduk']);
+Route::get( '/bahan/filter', [BahanBakuController::class, 'filterBahan']);

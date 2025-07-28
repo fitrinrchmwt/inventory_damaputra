@@ -76,4 +76,50 @@ class BahanBakuController extends Controller
 
     return redirect('/bahanbaku')->with('success', 'Bahan berhasil dihapus.');
 }
+
+public function filterBahan(Request $request)
+    {
+
+        
+
+
+        $query = BahanBakuModel::select('*');
+        
+        if ($request->nama_bahan) {
+            $query->where('nama_bahan', 'like', '%' . $request->nama_bahan . '%');
+            
+        }
+
+        if($request->satuan) {
+            $query->where('satuan', $request->satuan);
+        }
+
+        if ($request->stok_min) {
+            $query->where('stok_bahan', '>=', $request->stok_min);
+        }
+
+        if ($request->stok_max) {
+            $query->where('stok_bahan', '<=', $request->stok_max);
+        }
+
+        if ($request->tanggal) {
+            $query->whereDate('created_at', '=', $request->tanggal);
+        }
+
+        if ($request->updated_at) {
+            $query->whereDate('updated_at', '=', $request->updated_at);
+        }
+
+        
+
+        
+
+        $data = $query->get();
+        
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
 }
