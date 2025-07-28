@@ -93,6 +93,53 @@ class ProdukController extends Controller
 
 
 
+    public function filterProduk(Request $request)
+    {
+
+        
+
+
+        $query = ProdukModel::select('*');
+        
+        if ($request->nama_produk) {
+            $query->where('nama_produk', 'like', '%' . $request->nama_produk . '%');
+            
+        }
+
+        if($request->satuan) {
+            $query->where('satuan', $request->satuan);
+        }
+
+        if ($request->stok_min) {
+            $query->where('stok_produk', '>=', $request->stok_min);
+        }
+
+        if ($request->stok_max) {
+            $query->where('stok_produk', '<=', $request->stok_max);
+        }
+
+        if ($request->tanggal) {
+            $query->whereDate('created_at', '=', $request->tanggal);
+        }
+
+        if ($request->updated_at) {
+            $query->whereDate('updated_at', '=', $request->updated_at);
+        }
+
+        
+
+        
+
+        $data = $query->get();
+        
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $data
+        ]);
+    }
+
+
 
 
 
