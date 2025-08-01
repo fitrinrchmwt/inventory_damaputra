@@ -21,7 +21,8 @@
     <link rel="stylesheet" href="{{ asset('asset/css/sb-admin-2.min.css') }}" type="text/css">
     <style>
         .btn-damava {
-            background-color: #8e3f6d; /* atau sesuaikan dari warna sidebar kamu */
+            background-color: #8e3f6d;
+            /* atau sesuaikan dari warna sidebar kamu */
             color: white;
             border: none;
         }
@@ -48,9 +49,12 @@
                         <div class="row">
                             <div class="col-lg-6 d-none d-lg-block bg-login-image">
                                 <img src="{{ asset('asset/foto/foto4.jpg') }}" alt="Background login" width="500">
-                                <p class="text-center text-muted mt-3 fst-italic" style="margin-left:35px; margin-bottom:40px; color:#5b2a3d; font-weight: bold;">
-                                    "Kamu bukan yang mengemudi kapal, tapi arah takkan jelas tanpamu. Tetap jadi kompas yang tenang di tengah sibuknya arus kerja."
+                                <p class="text-center text-muted mt-3 fst-italic"
+                                    style="margin-left:35px; margin-bottom:40px; color:#5b2a3d; font-weight: bold;">
+                                    "Kamu bukan yang mengemudi kapal, tapi arah takkan jelas tanpamu. Tetap jadi kompas
+                                    yang tenang di tengah sibuknya arus kerja."
                                 </p>
+
                             </div>
                             <div class="col-lg-6">
                                 <div class="p-5">
@@ -65,33 +69,43 @@
                                     <form action="{{ url('login') }}" method="POST" class="user">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                name="email" id="email"   aria-describedby="emailHelp"
+                                            <input type="email" class="form-control form-control-user" name="email"
+                                                id="email" aria-describedby="emailHelp"
                                                 placeholder="Enter Email Address..." required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
                                                 name="password" id="password" placeholder="Password" required>
                                         </div>
-                                        <div class="form-group">
+                                        <!-- <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck">
                                                 <label class="custom-control-label" for="customCheck">Remember
                                                     Me</label>
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <button type="submit" class="btn btn-damava btn-user btn-block">
                                             Login
                                         </button>
-                                        <hr>
+                                        <!-- <hr>
                                         <a href="{{ url('dashboard') }}" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
+                                        </a> -->
+
+                                        <p class=" text-muted mt-3 fst-italic"
+                                            style=" color:#5b2a3d; font-weight: bold;">
+                                            Note :
+                                        </p>
+                                        <p class=" text-muted fst-italic"
+                                            style="margin-bottom:40px; color:#5b2a3d; font-weight: bold;">
+                                            Untuk Percobaan Pengujiannya menggunakan Email: admin01@gmail.com <br>
+                                            Sandi: 123456
+                                        </p>
                                     </form>
-                                    <hr>
+                                    <!-- <hr>
                                     <div class="text-center">
                                         <a class="small" href="{{ url('lupapassword') }}">Lupa Password?</a>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
                         </div>

@@ -183,16 +183,16 @@
                     </div>
                     <div class="card-body">
                         <!-- <div style="max-height: 300px; overflow-y: auto;">
-                                <table class="table table-bordered">
-                                    <thead style="background-color: #99627A; color: white;" class="text-center">
-                                        <tr>
-                                            <th>No.</th>
-                                            <th>ID Barang</th>
-                                            <th>Nama Barang</th>
-                                            <th>Stok</th>
-                                            <th>Jenis</th>
-                                        </tr>
-                                    </thead> -->
+                                    <table class="table table-bordered">
+                                        <thead style="background-color: #99627A; color: white;" class="text-center">
+                                            <tr>
+                                                <th>No.</th>
+                                                <th>ID Barang</th>
+                                                <th>Nama Barang</th>
+                                                <th>Stok</th>
+                                                <th>Jenis</th>
+                                            </tr>
+                                        </thead> -->
                         <div style="max-height: 300px; overflow-y: auto;">
                             <table class="table table-bordered text-center"
                                 style="border-collapse: separate; border-spacing: 0;">
@@ -262,22 +262,22 @@
 
                             </div>
                             <!-- <div class="card-header bg-primary text-white">
-                                                    <h5 class="mb-0">10 Pencatatan Stok Terakhir</h5>
-                                                </div> -->
+                                                        <h5 class="mb-0">10 Pencatatan Stok Terakhir</h5>
+                                                    </div> -->
                             <div class="card-body p-0">
                                 <!-- <div style="max-height: 300px; overflow-y: auto;">
-                                    <table class="table table-bordered ">
-                                        <thead style="background-color: #99627A; color: white;" class="text-center">
-                                            <tr>
-                                                <th>No</th>
-                                                <th>ID Kelola</th>
-                                                <th>Nama</th>
-                                                <th>Jumlah</th>
-                                                <th>Jenis</th>
-                                                <th>Keterangan</th>
-                                                <th>Tanggal</th>
-                                            </tr>
-                                        </thead> -->
+                                        <table class="table table-bordered ">
+                                            <thead style="background-color: #99627A; color: white;" class="text-center">
+                                                <tr>
+                                                    <th>No</th>
+                                                    <th>ID Kelola</th>
+                                                    <th>Nama</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Jenis</th>
+                                                    <th>Keterangan</th>
+                                                    <th>Tanggal</th>
+                                                </tr>
+                                            </thead> -->
                                 <div style="max-height: 300px; overflow-y: auto;">
                                     <table class="table table-bordered text-center"
                                         style="border-collapse: separate; border-spacing: 0;">
@@ -350,14 +350,18 @@
                                     </div>
                                     <div class="card-body">
                                         <div class="chart-area">
-                                            <canvas id="myAreaChart" width="100%" height="400"></canvas>
+                                            <div id="no-data-message"
+                                                style="display: none; text-align:center; color: red; font-weight: bold; padding-top:150px;">
+                                                Belum ada penjualan untuk bulan ini.
+                                            </div>
+                                            <canvas id="myAreaChart" width="100%" height="30"></canvas>
                                         </div>
                                         <hr>
                                     </div>
                                 </div>
                             </div>
 
-                            
+
                         </div>
 
                     </div>
@@ -368,47 +372,53 @@
             <!-- /.container-fluid -->
 @endsection
 
-@section('script')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
-        const labels = {!! json_encode($labels) !!};
-        const data = {!! json_encode($data) !!};
 
-        if (labels.length === 0 || data.length === 0) {
-            console.warn('Label atau data kosong, chart tidak akan dirender.');
-        } else {
-            const ctx = document.getElementById("myAreaChart").getContext('2d');
-            const myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Jumlah Penjualan',
-                        data: data,
-                        backgroundColor: 'rgba(78, 115, 223, 0.2)',
-                        borderColor: 'rgba(78, 115, 223, 1)',
-                        borderWidth: 2,
-                        pointRadius: 3,
-                        pointBackgroundColor: 'rgba(78, 115, 223, 1)',
-                        pointBorderColor: 'rgba(78, 115, 223, 1)',
-                        pointHoverRadius: 5,
-                        pointHoverBackgroundColor: 'rgba(78, 115, 223, 1)',
-                        pointHoverBorderColor: 'rgba(78, 115, 223, 1)',
-                        pointHitRadius: 10,
-                        pointBorderWidth: 2,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
+        @section('script')
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+                const labels = {!! json_encode($labels) !!};
+                const data = {!! json_encode($data) !!};
+
+                const messageDiv = document.getElementById("no-data-message");
+                const chartCanvas = document.getElementById("myAreaChart");
+
+                if (labels.length === 0 || data.length === 0) {
+                    messageDiv.style.display = "block";
+                    chartCanvas.style.display = "none"; // sembunyikan canvas chart
+                } else {
+                    messageDiv.style.display = "none";
+                    const ctx = chartCanvas.getContext('2d');
+                    const myChart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                label: 'Jumlah Penjualan',
+                                data: data,
+                                backgroundColor: 'rgba(78, 115, 223, 0.2)',
+                                borderColor: 'rgba(78, 115, 223, 1)',
+                                borderWidth: 2,
+                                pointRadius: 3,
+                                pointBackgroundColor: 'rgba(78, 115, 223, 1)',
+                                pointBorderColor: 'rgba(78, 115, 223, 1)',
+                                pointHoverRadius: 5,
+                                pointHoverBackgroundColor: 'rgba(78, 115, 223, 1)',
+                                pointHoverBorderColor: 'rgba(78, 115, 223, 1)',
+                                pointHitRadius: 10,
+                                pointBorderWidth: 2,
+                                fill: true
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
                         }
-                    }
+                    });
                 }
-            });
-        }
-    </script>
-@endsection
+            </script>
+        @endsection

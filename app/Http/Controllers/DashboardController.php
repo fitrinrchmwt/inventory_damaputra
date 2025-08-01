@@ -107,6 +107,7 @@ class DashboardController extends Controller
         $labels = $penjualanPerProduk->pluck('nama_produk');
         $data = $penjualanPerProduk->pluck('total_terjual');
 
+
         return view('home.dashboard', compact('notifikasiStokKurang','pencatatanTerbaru','totalProduk', 'totalStokProduk', 'produkmasuk','produkkeluar', 'totalBahan','totalStokBahan','bahanmasuk','bahankeluar','labels', 'data'));
     }
 
