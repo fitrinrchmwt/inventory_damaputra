@@ -346,13 +346,13 @@
                                 <!-- Iki sek di edit fittt -->
                                 <div class="card shadow mb-4">
                                     <div class="card-header py-3">
-                                        <h6 class="m-0 font-weight-bold text-primary">Grafik Penjualan Bulan Ini</h6>
+                                        <h6 class="m-0 font-weight-bold text-primary">Grafik Pencatatan Bulan Ini</h6>
                                     </div>
                                     <div class="card-body">
                                         <div class="chart-area">
                                             <div id="no-data-message"
                                                 style="display: none; text-align:center; color: red; font-weight: bold; padding-top:150px;">
-                                                Belum ada penjualan untuk bulan ini.
+                                                Belum ada Pencatatan untuk bulan ini.
                                             </div>
                                             <canvas id="myAreaChart" width="100%" height="30"></canvas>
                                         </div>
